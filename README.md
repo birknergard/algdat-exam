@@ -24,3 +24,12 @@
 ## Completed tasks
 -> ... 
 
+# Useful git commands
+
+For creating commits:
+    git add -A
+    git commit -m "your commit message"
+
+For pushing changes to repository
+    
+
