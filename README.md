@@ -5,6 +5,7 @@
 ### Setup
 -> Set up production environment with database and codebase
 -> Create branches for collaboration
+
 -> Delegate tasks
 -> ... 
 
