@@ -5,6 +5,7 @@
 ### Setup
 -> Set up production environment with database and codebase
 -> Create branches for collaboration
+
 -> Delegate tasks
 -> ... 
 
@@ -23,4 +24,12 @@
 ## Completed tasks
 -> ... 
 
-testing testing
+# Useful git commands
+
+For creating commits:
+    git add -A
+    git commit -m "your commit message"
+
+For pushing changes to repository
+    
+
