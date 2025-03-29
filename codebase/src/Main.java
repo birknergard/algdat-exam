@@ -18,6 +18,17 @@ public class Main {
         System.out.print("]\n");
     }
 
+    public static boolean isSorted(LinkedList<Float> list){
+        // omits first index size we are comparing two adjacent elements at a time,
+        // in order to prevent out of bounds exception
+        for(int i = 1; i < list.size(); i++){
+            // Returns false if unordered elements are found
+            if(list.get(i-1) > list.get(i)) return false;
+        }
+        // If loop completed the list has to be sorted
+        return true;
+    }
+
     // Main method where algorithms are executed, and data is handled
     public static void main(String[] args) {
         // Data structure to hold data
@@ -58,7 +69,6 @@ public class Main {
 
         } catch (FileNotFoundException e){
             System.out.println("Could not load file.");
-            return;
         }
     }
 }
