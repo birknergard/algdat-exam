@@ -30,6 +30,14 @@ For creating commits:
     git add -A
     git commit -m "your commit message"
 
-For pushing changes to repository
+For pushing changes to repository:
+    git push origin <branch_name>
+
+For pulling new changes from repository:
+    git pull origin <branch_name>
+    --> for rebase add --rebase
     
+For switching branch:
+    git checkout <branch_name>
+
 
