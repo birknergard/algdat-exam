@@ -1,33 +1,75 @@
 import DataHandling.City;
 import Sorters.QuickSorter;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Scanner;
-
 public class Main {
+
+    // Prints the list (of latitudes/floats)
+    public static void printList(LinkedList<Float> list){
+        System.out.print("[");
+        for(int i = 0; i < list.size(); i++){
+            System.out.printf(" %f,", list.get(i));
+        }
+        System.out.print("]\n");
+    }
+
+    public static boolean isSorted(LinkedList<Float> list){
+        // omits first index size we are comparing two adjacent elements at a time,
+        // in order to prevent out of bounds exception
+        for(int i = 1; i < list.size(); i++){
+            // Returns false if unordered elements are found
+            if(list.get(i-1) > list.get(i)) return false;
+        }
+        // If loop completed the list has to be sorted
+        return true;
+    }
+
     // Main method where algorithms are executed, and data is handled
     public static void main(String[] args) {
+        // Data structure to hold data
+        LinkedList<Float> latitudes = new LinkedList<>();
 
         // Handle data import
+        try{
+            Scanner reader = new Scanner(new FileInputStream("../worldcities.csv"));
 
-        // Parse data into data structure
-        LinkedList<City> cities = new LinkedList<>();
+            // Skipping the first line (its just category names)
+            System.out.println(reader.nextLine());
 
-        // Randomize order of list so its unsorted
+            // Parsing data into data structure
+            while(reader.hasNext()){
+                String raw = reader.nextLine();
 
-        // Use data structure (LinkedList) in sorting methods
+                // removes qoutation marks from start and end
+                String csvString = raw.substring(1, raw.length() - 1);
 
-        // Bubble sort
+                var city = new City(csvString);
+                latitudes.add(city.getLat());
+            }
+               //FOR VERIFYING: printList(latitudes);
 
-        // Insertion sort
+            // Randomize order of list so its unsorted
+            Collections.shuffle(latitudes);
+            // Use data structure (LinkedList) in sorting methods
 
-        // Merge sort
+            // TODO: Bubble sort
 
-        // Quick sort
+            // TODO: Insertion sort
 
+            // TODO: Merge sort
 
-        // Print output from sorting method
+            // TODO: Quick sort
 
+            // Print output from sorting method
 
+        } catch (FileNotFoundException e){
+            System.out.println("Could not load file.");
+        }
     }
 }
+
