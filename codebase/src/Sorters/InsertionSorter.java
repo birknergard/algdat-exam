@@ -6,22 +6,27 @@ public class InsertionSorter {
     public static void sort(LinkedList<Integer> list){
         int listLength = list.size();
         int unsortedElement;
-        int unsortedElementIndex = 1;
 
-        while(unsortedElementIndex < listLength){
+        for(int unsortedElementIndex = 1; unsortedElementIndex < listLength; unsortedElementIndex++){
             int insertionComparatorElementIndex = unsortedElementIndex - 1;
+
             if(list.get(unsortedElementIndex) < list.get(insertionComparatorElementIndex)){
                 unsortedElement = list.remove(unsortedElementIndex);
+
                 while(insertionComparatorElementIndex >= 0){
-                    if(list.get(insertionComparatorElementIndex) < unsortedElement){
+                    if(insertionComparatorElementIndex == 0 && list.get(insertionComparatorElementIndex) > unsortedElement){
+                        list.addFirst(unsortedElement);
+                        break;
+                    }
+
+                    if(list.get(insertionComparatorElementIndex) <= unsortedElement ){
                        list.add(insertionComparatorElementIndex + 1, unsortedElement);
+                       break;
                     }
 
                     insertionComparatorElementIndex--;
                 }
             }
-
-            unsortedElementIndex++;
         }
     }
 
@@ -49,7 +54,11 @@ public class InsertionSorter {
         testList.add(2);
 
         Collections.shuffle(testList);
+        System.out.printf("Before sort: ");
+        printList(testList);
+
         sort(testList);
+        System.out.printf("After sort: ");
         printList(testList);
     }
 }
