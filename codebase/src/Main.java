@@ -9,8 +9,7 @@ import java.util.LinkedList;
 import java.util.Scanner;
 public class Main {
 
-
-    public static boolean isSorted(LinkedList<Double> list){
+    private static boolean isSorted(LinkedList<Double> list){
         // omits first index size we are comparing two adjacent elements at a time,
         // in order to prevent out of bounds exception
         for(int i = 1; i < list.size(); i++){
