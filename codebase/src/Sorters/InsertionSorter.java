@@ -3,17 +3,20 @@ import java.util.Collections;
 import java.util.LinkedList;
 
 public class InsertionSorter {
-    public static void sort(LinkedList<Integer> list){
+    public static int sort(LinkedList<Integer> list){
+        int iterations = 0;
         int listLength = list.size();
         int unsortedElement;
 
         for(int unsortedElementIndex = 1; unsortedElementIndex < listLength; unsortedElementIndex++){
+            iterations++;
             int insertionComparatorElementIndex = unsortedElementIndex - 1;
 
             if(list.get(unsortedElementIndex) < list.get(insertionComparatorElementIndex)){
                 unsortedElement = list.remove(unsortedElementIndex);
 
                 while(insertionComparatorElementIndex >= 0){
+                    iterations++;
                     if(insertionComparatorElementIndex == 0 && list.get(insertionComparatorElementIndex) > unsortedElement){
                         list.addFirst(unsortedElement);
                         break;
@@ -28,6 +31,8 @@ public class InsertionSorter {
                 }
             }
         }
+
+        return iterations;
     }
 
     // For internal testing
@@ -39,6 +44,7 @@ public class InsertionSorter {
         System.out.print("]\n");
     }
 
+    /*
     public static void main(String[] args) {
         LinkedList<Integer> testList = new LinkedList<>();
         testList.add(10);
@@ -57,8 +63,10 @@ public class InsertionSorter {
         System.out.printf("Before sort: ");
         printList(testList);
 
-        sort(testList);
+        int iterations = sort(testList);
         System.out.printf("After sort: ");
         printList(testList);
+        System.out.printf("Iteration count: %d\n", iterations);
     }
+     */
 }
