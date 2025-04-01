@@ -36,14 +36,6 @@ public class InsertionSorter {
     }
 
     // For internal testing
-    private static void printList(LinkedList<Double> list){
-        System.out.print("[");
-        for(int i = 0; i < list.size(); i++){
-            System.out.printf(" %.3f,", list.get(i));
-        }
-        System.out.print("]\n");
-    }
-
     public static void main(String[] args) {
         LinkedList<Double> testList = new LinkedList<>();
         testList.add(10.0);
@@ -60,11 +52,11 @@ public class InsertionSorter {
 
         Collections.shuffle(testList);
         System.out.print("Before sort: ");
-        printList(testList);
+        System.out.println(testList);
 
         int iterations = sort(testList);
         System.out.print("After sort: ");
-        printList(testList);
+        System.out.println(testList);
         System.out.printf("Iteration count: %d\n", iterations);
     }
 }
