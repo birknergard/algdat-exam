@@ -7,17 +7,26 @@ import java.io.FileNotFoundException;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Scanner;
+
 public class Main {
     // Method used for running sorting algorithms. Includes printing of messages and tracks time.
     public boolean testSort(Sorter sorter, LinkedList<Double> list, int maxOperations){
         int operations = 0;
         long startTime = System.nanoTime();
+        boolean wasSorted;
 
+        System.out.printf("Starting sort execution on list of size %d...\n", list.size());
         sorter.sort(list);
+        System.out.println("Sorting algorithm complete! Verifying...\n");
+
+        wasSorted = isSorted(list);
+
+        if(wasSorted) System.out.println("Sorting algorithm successfully sorted list!");
+        if(!wasSorted) System.out.println("Sorting algorithm failed in sorting list!");
 
         long timeElapsed = System.nanoTime() - startTime;
         System.out.printf("Time elapsed since execution start: %.2f ms", (timeElapsed * Math.pow(10,-6)));
-        return true;
+        return wasSorted;
     }
 
     private static boolean isSorted(LinkedList<Double> list){
@@ -76,4 +85,3 @@ public class Main {
         }
     }
 }
-
