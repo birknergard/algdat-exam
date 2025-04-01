@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 public class City {
     String city;
-    float lat;
+    double lat;
     double lng;
     String country;
     String iso2;
@@ -19,7 +19,7 @@ public class City {
         String[] entry = csvEntry.split("\",\"");
 
         this.city = verify(entry[1]) ? entry[1] : "Empty";
-        this.lat = verify(entry[2]) ? Float.parseFloat(entry[2]) : 0;
+        this.lat = verify(entry[2]) ? Double.parseDouble(entry[2]) : 0;
         this.lng = verify(entry[2]) ? Double.parseDouble(entry[3]) : 0;
         this.country = verify(entry[2]) ? entry[4] : "";
         this.iso2 = verify(entry[2]) ? entry[5] : "";
@@ -37,7 +37,7 @@ public class City {
     }
 
     // For now we only have latitude, can write getters for other attributes later.
-    public float getLat() {
+    public double getLat() {
         return this.lat;
     }
 }

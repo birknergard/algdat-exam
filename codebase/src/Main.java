@@ -10,15 +10,15 @@ import java.util.Scanner;
 public class Main {
 
     // Prints the list (of latitudes/floats)
-    public static void printList(LinkedList<Float> list){
+    public static void printList(LinkedList<Double> list){
         System.out.print("[");
         for(int i = 0; i < list.size(); i++){
-            System.out.printf(" %f,", list.get(i));
+            System.out.printf(" %.3f,", list.get(i));
         }
         System.out.print("]\n");
     }
 
-    public static boolean isSorted(LinkedList<Float> list){
+    public static boolean isSorted(LinkedList<Double> list){
         // omits first index size we are comparing two adjacent elements at a time,
         // in order to prevent out of bounds exception
         for(int i = 1; i < list.size(); i++){
@@ -32,7 +32,7 @@ public class Main {
     // Main method where algorithms are executed, and data is handled
     public static void main(String[] args) {
         // Data structure to hold data
-        LinkedList<Float> latitudes = new LinkedList<>();
+        LinkedList<Double> latitudes = new LinkedList<>();
 
         // Handle data import
         try{
@@ -51,7 +51,7 @@ public class Main {
                 var city = new City(csvString);
                 latitudes.add(city.getLat());
             }
-               //FOR VERIFYING: printList(latitudes);
+               printList(latitudes);
 
             // Randomize order of list so its unsorted
             Collections.shuffle(latitudes);
