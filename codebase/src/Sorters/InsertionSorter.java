@@ -11,31 +11,23 @@ public class InsertionSorter {
         for(int unsortedElementIndex = 1; unsortedElementIndex < listLength; unsortedElementIndex++){
             operations++;
             int insertionComparatorElementIndex = unsortedElementIndex - 1;
-            operations++;
 
             if(list.get(unsortedElementIndex) < list.get(insertionComparatorElementIndex)){
-                operations++;
                 unsortedElement = list.remove(unsortedElementIndex);
-                operations++;
 
                 while(insertionComparatorElementIndex >= 0){
                     operations++;
                     if(insertionComparatorElementIndex == 0 && list.get(insertionComparatorElementIndex) > unsortedElement){
-                        operations++;
                         list.addFirst(unsortedElement);
-                        operations++;
                         break;
                     }
 
                     if(list.get(insertionComparatorElementIndex) <= unsortedElement ){
-                        operations++;
                        list.add(insertionComparatorElementIndex + 1, unsortedElement);
-                        operations++;
                        break;
                     }
 
                     insertionComparatorElementIndex--;
-                    operations++;
                 }
             }
         }
