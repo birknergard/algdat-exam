@@ -9,14 +9,6 @@ import java.util.LinkedList;
 import java.util.Scanner;
 public class Main {
 
-    // Prints the list (of latitudes/floats)
-    public static void printList(LinkedList<Double> list){
-        System.out.print("[");
-        for(int i = 0; i < list.size(); i++){
-            System.out.printf(" %.3f,", list.get(i));
-        }
-        System.out.print("]\n");
-    }
 
     public static boolean isSorted(LinkedList<Double> list){
         // omits first index size we are comparing two adjacent elements at a time,
@@ -51,7 +43,7 @@ public class Main {
                 var city = new City(csvString);
                 latitudes.add(city.getLat());
             }
-               printList(latitudes);
+               //System.out.println(latitudes);
 
             // Randomize order of list so its unsorted
             Collections.shuffle(latitudes);
