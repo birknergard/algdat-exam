@@ -8,14 +8,27 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Scanner;
 public class Main {
+    // Method used for running sorting algorithms. Includes printing of messages and tracks time.
+    public boolean testSort(Sorter sorter, LinkedList<Double> list, int maxOperations){
+        int operations = 0;
+        long startTime = System.nanoTime();
+
+        sorter.sort(list);
+
+        long timeElapsed = System.nanoTime() - startTime;
+        System.out.printf("Time elapsed since execution start: %.2f ms", (timeElapsed * Math.pow(10,-6)));
+        return true;
+    }
 
     private static boolean isSorted(LinkedList<Double> list){
         // omits first index size we are comparing two adjacent elements at a time,
         // in order to prevent out of bounds exception
         for(int i = 1; i < list.size(); i++){
+
             // Returns false if unordered elements are found
             if(list.get(i-1) > list.get(i)) return false;
         }
+
         // If loop completed the list has to be sorted
         return true;
     }
