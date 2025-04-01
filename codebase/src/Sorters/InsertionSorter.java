@@ -38,17 +38,10 @@ public class InsertionSorter {
     // For internal testing
     public static void main(String[] args) {
         LinkedList<Double> testList = new LinkedList<>();
-        testList.add(10.0);
-        testList.add(0.0);
-        testList.add(20.0);
-        testList.add(73.0);
-        testList.add(1.0);
-        testList.add(50.0);
-        testList.add(5.0);
-        testList.add(100.0);
-        testList.add(4572.0);
-        testList.add(1.0);
-        testList.add(2.0);
+        // Generate a large randomized list for testing
+        for(int i = 0; i < 10_000; i++){
+            testList.push(Math.floor(Math.random() * 100000) / 100);
+        }
 
         Collections.shuffle(testList);
         System.out.print("Before sort: ");
