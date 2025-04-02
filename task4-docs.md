@@ -32,8 +32,8 @@ FUNC QuickSort(LowerBoundaryIndex, HigherBoundaryIndex, List):
     PivotIndex = IteratorI
 
     // Recursively sort the two partitions 
-    QuickSort(LowerBoundary, PivotIndex - 1)
-    QuickSort(PivotIndex + 1, HigherBoundary)
+    QuickSort(LowerBoundary, PivotIndex - 1, List)
+    QuickSort(PivotIndex + 1, HigherBoundary, List)
 
 ENDFUNC
 ```
@@ -49,31 +49,25 @@ FUNC QuickSort(LowerBoundaryIndex, HigherBoundaryIndex, List):
     
     FOR(EVER):
         // Increments left until it finds a number larger than the pivot
-        WHILE Left <= Right:
-            IF List[Left] < List[Pivot]:
+        DO WHILE List[Left] < List[Pivot]:
                 Left++;
-            ENDIF
         ENDWHILE
 
         // Decrements right until it finds a number smaller than the pivot
-        WHILE Right >= Left: 
-            IF List[Right] > List[Pivot]:
+        DO WHILE List[Right] > List[Pivot]: 
                 Right--;
-            ENDIF
         ENDWHILE
 
         // Exits if left and right crossed
         IF Left >= Right:
-            RETURN LEFT;
+            RETURN Right;
         ENDIF
 
         SWAP(List[Left], List[Right])
     ENDFOR
 
-    
-
-    // Recursively sort the subarrays created
-    QuickSort(LowerBoundary, PivotIndex - 1)
+    // Recursively sort the subarrays created, pivot is included in lower boundary for reasons(? explain)
+    QuickSort(LowerBoundary, PivotIndex)
     QuickSort(PivotIndex + 1, HigherBoundary)
 ENDFUNC
 ```
