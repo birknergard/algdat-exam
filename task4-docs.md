@@ -5,9 +5,10 @@ Quicksort is a sorting algorithm which used a divide and conquer methodology to 
 The algorithm sorts by utilizing a "pivot", for which elements are put on the left (smaller) or right (larger) depending on the size of said pivot. The list then split in two on the pivot and the same method is repeated until the list is sorted.
 
 ## Pseudocode 
----
-´// comments are written for context within the pseudocode´ 
+`// comments are written for context within the pseudocode`
+
 Below is the pseudocode for the quicksort algorithm. 
+
 ```
 FUNC QuickSort(LowerBoundaryIndex, HigherBoundaryIndex, List):
 
