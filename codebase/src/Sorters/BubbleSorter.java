@@ -30,28 +30,27 @@ public class BubbleSorter {
 
     public static void optimisedSort(LinkedList<Integer> list) {
         int listLength = list.size();
-        boolean swapped = false;
+        boolean swapped;
         int swaps = 0;
         int passes = 0;
+        int lastSwapPosition;
+        int end = listLength - 1;
 
-        //Sorting
-        for (int i = 0; i < listLength - 1; i++) {
+        do {
             swapped = false;
+            lastSwapPosition = 0;
             passes++;
-            for (int j = 0; j < listLength - i - 1; j++) {
+            for (int j = 0; j < end; j++) {
                 if (list.get(j) > list.get(j + 1)) {
-                    //Swap em!
-                    int temporary = list.get(j);
-                    list.set(j, list.get(j + 1));
-                    list.set(j + 1, temporary);
+                    Collections.swap(list, j, j + 1);
                     swapped = true;
                     swaps++;
+                    lastSwapPosition = j;
                 }
             }
-            if (!swapped) {
-                break;
-            }
-        }
+            end = lastSwapPosition;
+        } while (swapped);
+
         System.out.println("Sorted list using an optimised BubbleSort: " + list);
         System.out.println("Number of swaps: " + swaps);
         System.out.println("Number of passes: " + passes);
@@ -59,17 +58,17 @@ public class BubbleSorter {
 
 
     public static void main(String[] args) {
+
         LinkedList<Integer> testList = new LinkedList<>();
         for (int i = 1; i <= 10; i++) {
             testList.add(i);
         }
-
         Collections.shuffle(testList);
 
         //Non-optimised version
         System.out.println("Before sorting with non-optimised BubbleSort: " + testList);
         long startTimeNoOpt = System.nanoTime();
-        sort(new LinkedList<>(testList)); //Bruker en kopi for å holde på den originale listen
+        sort(new LinkedList<>(testList));
         long endTimeNoOpt = System.nanoTime();
         long timeNoOpt = endTimeNoOpt - startTimeNoOpt;
         System.out.println("Time taken with a non-optimised BubbleSort: " + timeNoOpt + " nanoseconds");
