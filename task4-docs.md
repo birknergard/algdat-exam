@@ -43,22 +43,34 @@ Below is the pseudocode for quicksort algorithm with hoare partitioning scheme. 
 ```
 FUNC QuickSort(LowerBoundaryIndex, HigherBoundaryIndex, List):
 
-    // Find the pivot, in this case the higher boundary
-    PivotValue = List[HigherBoundaryIndex]
+    Pivot = LowerBoundaryIndex
+    Left = LowerBoundaryIndex - 1
+    High = HigherBoundaryIndex + 1
     
-    // Create two index "pointers" to control swapping operations
-    IteratorI, IteratorJ = LowerBoundary
+    FOR(EVER):
+        // Increments left until it finds a number larger than the pivot
+        WHILE Left <= Right:
+            IF List[Left] < List[Pivot]:
+                Left++;
+            ENDIF
+        ENDWHILE
 
-    // Partitioning (or sorting) algorithm
-    FOR LowerBoundary TO HigherBoundary:
-        IF List[Iterator] <= PivotValue:
-            Swap(List[IteratorJ], List[IteratorI])            
-            IteratorJ++
+        // Decrements right until it finds a number smaller than the pivot
+        WHILE Right >= Left: 
+            IF List[Right] > List[Pivot]:
+                Right--;
+            ENDIF
+        ENDWHILE
+
+        // Exits if left and right crossed
+        IF Left >= Right:
+            RETURN LEFT;
         ENDIF
-        IteratorI++
+
+        SWAP(List[Left], List[Right])
     ENDFOR
 
-    PivotIndex = IteratorI
+    
 
     // Recursively sort the subarrays created
     QuickSort(LowerBoundary, PivotIndex - 1)

@@ -5,6 +5,11 @@ import java.util.Collections;
 import java.util.LinkedList;
 
 public class QuickSorter {
+    // Hoare partitioning
+    private static int partitionHoare(LinkedList<Double> list, int lowerBoundaryIndex, int higherBoundaryIndex){
+        return 0;
+    }
+
     // Lomuto partitioning
     private static int partitionLom(LinkedList<Double> list, int lowerBoundaryIndex, int higherBoundaryIndex){
         double pivotValue = list.get(higherBoundaryIndex);
