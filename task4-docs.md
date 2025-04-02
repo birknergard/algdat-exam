@@ -1,1 +1,8 @@
-# Task 4 Pseudocode
+# Task 4 Pseudocode 
+`code`
+FUNC QuickSort():
+
+
+    
+ENDFUNC
+`code`
