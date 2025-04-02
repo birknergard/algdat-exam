@@ -1,15 +1,10 @@
 # Task 2, Insertion Sort:
-Example: [5, 1, 2, 3, 6, 4, 3, 2]
-Step:
-Compare 5 and 1
-    if 1 is smaller than five
-        Remember index of 1 (1)
-        Search for an index that contaisn a value that is smaller than the value of index (1) (we call this i)
-        Until i = 0 
-        if found index value is smaller than the one you are moving, insert the element before then
 
-## PSEUDOCODE (UNTESTED):
-`code`
+## Description
+Insertion sort is an algorithm (!!!)
+
+## PSEUDOCODE 
+```
     List = unsorted list of elements
     ListLength = Length of list
 
@@ -37,15 +32,14 @@ Compare 5 and 1
 
         ENDIF
     ENDWHILE
-`code`
-## Time complexity
-    Time complexity should be big O(n^2) exponential time, given that the algorithm contains a nested loop.  
-## Space complexity
-    Space complexity should be big O(1) constant space, given that we are only storing one element at a time.
+```
+
+## Time and space complexity
+Time complexity should be big O(n^2) exponential time, given that the algorithm contains a nested loop.  
+Space complexity should be big O(1) constant space, given that we are only storing one element at a time.
+
 ## Optimizations
-    I believe the algorithm should be faster when sorting a linked list.
-    Given that we dont have to shift the other elements forward with every insert.
-    Although this is only a marginal optimization.
+I believe the algorithm should be faster when sorting a linked list. Given that we dont have to shift the other elements forward with every insert. Although this is only a marginal optimization.
         
 ## Sources:
 https://en.wikipedia.org/wiki/Insertion_sort
