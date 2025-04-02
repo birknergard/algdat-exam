@@ -1,37 +1,40 @@
 package Sorters;
 
+import javax.xml.transform.Source;
 import java.util.Collections;
 import java.util.LinkedList;
 
 public class QuickSorter {
-    private static void quickSortRec(LinkedList<Double> list, int lowerBoundaryIndex, int higherBoundaryIndex){
-        // If low and high is the same that means the partition has been partitioned down to one element, in which case we break the sort.
-        if(higherBoundaryIndex - lowerBoundaryIndex == 1){
-            return;
-        }
+    // Lomuto partitioning
+    private static int partitionLom(LinkedList<Double> list, int lowerBoundaryIndex, int higherBoundaryIndex){
+        double pivotValue = list.get(higherBoundaryIndex);
+        System.out.printf("Pivot for partition: %.2f\n", pivotValue);
 
-        int pivotIndex = higherBoundaryIndex;
-
-        double pivotValue = list.get(pivotIndex);
-        System.out.printf("PivotValue: %.2f\n", pivotValue);
+        //System.out.printf("PivotValue: %.2f\n", pivotValue);
         int iteratorI = lowerBoundaryIndex;
-        int iteratorJ = lowerBoundaryIndex;
-
-        for(;iteratorJ < higherBoundaryIndex; iteratorJ++){
+        for(int iteratorJ = lowerBoundaryIndex ; iteratorJ <= higherBoundaryIndex - 1; iteratorJ++){
             if(list.get(iteratorJ) <= pivotValue){
                 Collections.swap(list, iteratorJ, iteratorI);
                 iteratorI++;
             }
-            System.out.println("J:" + iteratorJ);
-            System.out.println("I:" + iteratorI);
         }
-        Collections.swap(list, iteratorI, pivotIndex);
+        Collections.swap(list, iteratorI, higherBoundaryIndex);
+        //System.out.println("Current List:" + list);
 
-        int newPivotIndex = iteratorI;
-        /*
+        // Returns the new pivot index
+        return iteratorI;
+    }
+
+    private static void quickSortRec(LinkedList<Double> list, int lowerBoundaryIndex, int higherBoundaryIndex){
+        // TODO: breakpoint
+        if(lowerBoundaryIndex >= higherBoundaryIndex || lowerBoundaryIndex < 0 ){
+            return;
+        }
+
+        int newPivotIndex = partitionLom(list, lowerBoundaryIndex, higherBoundaryIndex);
+        System.out.printf("Index of new pivot: %d\n", newPivotIndex);
         quickSortRec(list, lowerBoundaryIndex, newPivotIndex - 1);
         quickSortRec(list, newPivotIndex + 1, higherBoundaryIndex);
-         */
     }
 
     public static int sort(LinkedList<Double> list){

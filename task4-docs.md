@@ -7,7 +7,38 @@ The algorithm sorts by utilizing a "pivot", for which elements are put on the le
 ## Pseudocode 
 `// comments are written for context within the pseudocode`
 
-Below is the pseudocode for the quicksort algorithm. 
+Below is the pseudocode for the quicksort algorithm. It sets pivot as high (Lomuto) 
+
+```
+FUNC QuickSort(LowerBoundaryIndex, HigherBoundaryIndex, List):
+
+    // pivot is always set as the higher boundary (Lomuto)
+    PivotValue = List[HigherBoundaryIndex]
+    
+    // Create two index "pointers" to control swapping operations, start at same position
+    IteratorI, IteratorJ = LowerBoundary
+
+    // Partitioning (or sorting) algorithm, pivot is ignored for initial partition
+    FOR LowerBoundary TO HigherBoundary - 1: 
+        IF List[Iterator] <= PivotValue:
+            SWAP(List[IteratorJ], List[IteratorI])            
+            IteratorJ++
+        ENDIF
+        IteratorI++
+    ENDFOR
+
+    // Since pivot was ignored, it can now be swapped to the correct position in the list
+    SWAP(IteratorI, HigherBoundaryIndex)
+    PivotIndex = IteratorI
+
+    // Recursively sort the two partitions 
+    QuickSort(LowerBoundary, PivotIndex - 1)
+    QuickSort(PivotIndex + 1, HigherBoundary)
+
+ENDFUNC
+```
+
+Below is the pseudocode for quicksort algorithm with hoare partitioning scheme. It sets pivot as low 
 
 ```
 FUNC QuickSort(LowerBoundaryIndex, HigherBoundaryIndex, List):
@@ -34,7 +65,6 @@ FUNC QuickSort(LowerBoundaryIndex, HigherBoundaryIndex, List):
     QuickSort(PivotIndex + 1, HigherBoundary)
 ENDFUNC
 ```
-
 ---
 ## Time and space complexity
 
