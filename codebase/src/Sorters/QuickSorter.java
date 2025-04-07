@@ -6,15 +6,22 @@ import java.util.Collections;
 import java.util.LinkedList;
 
 public class QuickSorter {
+
+    private static void swap(Double[] list, int indexA, int indexB){
+        double temp = list[indexA];
+        list[indexA] = list[indexB];
+        list[indexB] = temp;
+    }
+
     // Hoare partitioning
-    private static int partitionHoare(LinkedList<Double> list, int lowerBoundaryIndex, int higherBoundaryIndex, boolean withRandomIndex){
+    private static int partitionHoare(Double[] list, int lowerBoundaryIndex, int higherBoundaryIndex, boolean withRandomIndex){
         double pivot;
         if(withRandomIndex) {
             // with random pivot, it can not be first or last element
-            pivot = Math.floor(Math.random() * list.size() - 1) + 1;
+            pivot = Math.floor(Math.random() * list.length - 1) + 1;
         } else {
             // Sets pivot as low
-            pivot = list.get(lowerBoundaryIndex);
+            pivot = list[lowerBoundaryIndex];
         }
         int left = lowerBoundaryIndex - 1;
         int right = higherBoundaryIndex + 1;
@@ -22,41 +29,41 @@ public class QuickSorter {
         while(true){
             do{
                 left++;
-            } while(list.get(left) < pivot);
+            } while(list[left] < pivot);
 
             do {
                 right--;
-            } while(list.get(right) > pivot);
+            } while(list[right] > pivot);
 
             if(left >= right){
                 return right;
             }
 
-            Collections.swap(list, left, right);
+            swap(list, left, right);
         }
     }
 
     // Lomuto partitioning
-    private static int partitionLom(LinkedList<Double> list, int lowerBoundaryIndex, int higherBoundaryIndex){
-        double pivotValue = list.get(higherBoundaryIndex);
+    private static int partitionLom(Double[] list, int lowerBoundaryIndex, int higherBoundaryIndex){
+        double pivotValue = list[higherBoundaryIndex];
         System.out.printf("Pivot for partition: %.2f\n", pivotValue);
 
         //System.out.printf("PivotValue: %.2f\n", pivotValue);
         int iteratorI = lowerBoundaryIndex;
         for(int iteratorJ = lowerBoundaryIndex ; iteratorJ <= higherBoundaryIndex - 1; iteratorJ++){
-            if(list.get(iteratorJ) <= pivotValue){
-                Collections.swap(list, iteratorJ, iteratorI);
+            if(list[iteratorJ] <= pivotValue){
+                swap(list, iteratorJ, iteratorI);
                 iteratorI++;
             }
         }
-        Collections.swap(list, iteratorI, higherBoundaryIndex);
+        swap(list, iteratorI, higherBoundaryIndex);
         //System.out.println("Current List:" + list);
 
         // Returns the new pivot index
         return iteratorI;
     }
 
-    private static void quickSortRec(LinkedList<Double> list, int lowerBoundaryIndex, int higherBoundaryIndex, int partitionMethod){
+    private static void quickSortRec(Double[] list, int lowerBoundaryIndex, int higherBoundaryIndex, int partitionMethod){
         // TODO: breakpoint
         if(lowerBoundaryIndex >= higherBoundaryIndex || lowerBoundaryIndex < 0 ){
             return;
@@ -86,8 +93,8 @@ public class QuickSorter {
         }
     }
 
-    public static int sort(LinkedList<Double> list){
-        quickSortRec(list, 0, list.size() - 1, 1);
+    public static int sort(Double[] list){
+        quickSortRec(list, 0, list.length - 1, 1);
 
         return 1;
     }
@@ -111,10 +118,11 @@ public class QuickSorter {
          */
 
         Collections.shuffle(testList);
+        Double[] array = testList.toArray(new Double[0]);
         System.out.print("Before sort: ");
         //System.out.println(testList);
 
-        int iterations = sort(testList);
+        int iterations = sort(array);
         System.out.print("After sort: ");
         //System.out.println(testList);
         System.out.printf("Iteration count: %d\n", iterations);
