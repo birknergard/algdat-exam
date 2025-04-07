@@ -1,14 +1,21 @@
 package Sorters;
 
 import javax.xml.transform.Source;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 
 public class QuickSorter {
     // Hoare partitioning
-    private static int partitionHoare(LinkedList<Double> list, int lowerBoundaryIndex, int higherBoundaryIndex){
-        // Sets pivot as low
-        double pivot = list.get(lowerBoundaryIndex);
+    private static int partitionHoare(LinkedList<Double> list, int lowerBoundaryIndex, int higherBoundaryIndex, boolean withRandomIndex){
+        double pivot;
+        if(withRandomIndex) {
+            // with random pivot, it can not be first or last element
+            pivot = Math.floor(Math.random() * list.size() - 1) + 1;
+        } else {
+            // Sets pivot as low
+            pivot = list.get(lowerBoundaryIndex);
+        }
         int left = lowerBoundaryIndex - 1;
         int right = higherBoundaryIndex + 1;
 
@@ -27,30 +34,6 @@ public class QuickSorter {
 
             Collections.swap(list, left, right);
         }
-    }
-    // Hoare with random pivot
-    private static int partitionHoare(LinkedList<Double> list, int lowerBoundaryIndex, int higherBoundaryIndex){
-        // TODO: Sets random pivot within boundaries
-        double pivot = list.get((int) Math.floor(Math.random() * 10));
-        int left = lowerBoundaryIndex - 1;
-        int right = higherBoundaryIndex + 1;
-
-        while(true){
-            do{
-                left++;
-            } while(list.get(left) < pivot);
-
-            do {
-                right--;
-            } while(list.get(right) > pivot);
-
-            if(left >= right){
-                return right;
-            }
-
-            Collections.swap(list, left, right);
-        }
-
     }
 
     // Lomuto partitioning
@@ -80,7 +63,7 @@ public class QuickSorter {
         }
         int newPivotIndex;
         switch (partitionMethod){
-            // Lomuto
+            // Lomuto, pivot is last element
             case 0:
                 newPivotIndex = partitionLom(list, lowerBoundaryIndex, higherBoundaryIndex);
                 System.out.printf("Index of new pivot: %d\n", newPivotIndex);
@@ -88,11 +71,18 @@ public class QuickSorter {
                 quickSortRec(list, newPivotIndex + 1, higherBoundaryIndex, partitionMethod);
                 break;
 
+            // Hoare, pivot is first element
             case 1:
-                newPivotIndex = partitionHoare(list, lowerBoundaryIndex, higherBoundaryIndex);
+                newPivotIndex = partitionHoare(list, lowerBoundaryIndex, higherBoundaryIndex, false);
                 quickSortRec(list, lowerBoundaryIndex, newPivotIndex, partitionMethod);
                 quickSortRec(list, newPivotIndex + 1, higherBoundaryIndex, partitionMethod);
                 break;
+
+            // Hoare, first pivot is random(not first or last), then first element for each partition
+            case 2:
+                newPivotIndex = partitionHoare(list, lowerBoundaryIndex, higherBoundaryIndex, true);
+                quickSortRec(list, lowerBoundaryIndex, newPivotIndex, partitionMethod);
+                quickSortRec(list, newPivotIndex + 1, higherBoundaryIndex, partitionMethod);
         }
     }
 
