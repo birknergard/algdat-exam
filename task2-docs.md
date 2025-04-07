@@ -6,30 +6,34 @@ Insertion sort is an algorithm (!!!)
 ## PSEUDOCODE 
 ```
     List = unsorted list of elements
-    ListLength = Length of list
 
     // We start with the second element in the list, since we are comparing backwards.
     UnsortedElementIndex = 1
 
-    WHILE UnsortedElementIndex < ListLength:
+    WHILE UnsortedElementIndex < List.Length:
         IF List[UnsortedElementIndex] < List[UnsortedElementIndex - 1]: 
+            // Store the unsorted element 
+            UnsortedElement = List[UnsortedElementIndex]
+
+            // Set comparison element to start position
             InsertionComparatorElementIndex = UnsortedElementIndex - 1
-            Remove element from List[UnsortedElementIndex]
 
-            WHILE InsertionComparatorElementIndex != 0:
-                IF List[InsertionComparatorElementIndex] <= List[UnsortedElementIndex]:
-                    List.insert(atIndex = InsertionComparatorElementIndex, value=List[UnsortedElementIndex])
-                    ENDIF
+            WHILE InsertionComparatorElementIndex >= 0:
+                
+                // shift copy the new element forwards one index (to make space for unsorted element, or next shift) 
+                List[InsertionComparatorElementIndex + 1] = List[InsertionComparatorElementIndex]
 
+                IF List[InsertionComparatorElementIndex] <= UnsortedElement:
+                    BREAK
                 ELSE:
                     InsertionComparatorElementIndex--;
-
                 ENDIF
+                
+                List[InsertionComparatorElementIndex + 1] = UnsortedElement;
             ENDWHILE
 
         ElSE:
             UnsortedElementIndex++;
-
         ENDIF
     ENDWHILE
 ```
