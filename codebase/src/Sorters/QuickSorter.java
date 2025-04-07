@@ -28,6 +28,30 @@ public class QuickSorter {
             Collections.swap(list, left, right);
         }
     }
+    // Hoare with random pivot
+    private static int partitionHoare(LinkedList<Double> list, int lowerBoundaryIndex, int higherBoundaryIndex){
+        // TODO: Sets random pivot within boundaries
+        double pivot = list.get((int) Math.floor(Math.random() * 10));
+        int left = lowerBoundaryIndex - 1;
+        int right = higherBoundaryIndex + 1;
+
+        while(true){
+            do{
+                left++;
+            } while(list.get(left) < pivot);
+
+            do {
+                right--;
+            } while(list.get(right) > pivot);
+
+            if(left >= right){
+                return right;
+            }
+
+            Collections.swap(list, left, right);
+        }
+
+    }
 
     // Lomuto partitioning
     private static int partitionLom(LinkedList<Double> list, int lowerBoundaryIndex, int higherBoundaryIndex){

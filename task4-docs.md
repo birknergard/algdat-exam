@@ -76,3 +76,7 @@ ENDFUNC
 
 ## Optimizations  
 The simplest optimization for QuickSort is to randomize the Pivot index.
+
+## Sources
+https://en.wikipedia.org/wiki/Quicksort
+https://www.algowalker.com/quick-sort-hoare.html
