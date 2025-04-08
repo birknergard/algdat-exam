@@ -28,23 +28,22 @@ public class Main {
         if(wasSorted) System.out.println("Sorting algorithm successfully sorted list!");
         if(!wasSorted) System.out.println("Sorting algorithm failed in sorting list!");
 
-        long timeElapsed = System.nanoTime() - startTime;
-        System.out.printf("\n ---->> Sort execution time: %10.2f ms\n", (timeSorting * Math.pow(10,-6)));
+        System.out.printf("\n ---->> Sort execution time: %.2f ms (%.4f s)\n", (timeSorting * Math.pow(10, -6)), timeSorting * Math.pow(10, -9));
 
         // Extra logging based on sorting algorithm
         if(sorter instanceof BubbleSorter){
-            System.out.printf(" --> Passes: %10d \n", ((BubbleSorter) sorter).getPasses());
-            System.out.printf(" --> Swaps: %10d \n", ((BubbleSorter) sorter).getSwaps());
+            System.out.printf("    --> Passes: %10d \n", ((BubbleSorter) sorter).getPasses());
+            System.out.printf("    --> Swaps:  %10d \n", ((BubbleSorter) sorter).getSwaps());
 
         } else if(sorter instanceof InsertionSorter){
-            System.out.printf(" --> Operations: %10d \n", ((InsertionSorter) sorter).getOperations());
+            System.out.printf("    --> Operations: %10d \n", ((InsertionSorter) sorter).getOperations());
 
         } else if(sorter instanceof MergeSorter){
-            System.out.printf(" --> Merges: %10d \n", ((MergeSorter) sorter).getMerges());
+            System.out.printf("    --> Merges: %10d \n", ((MergeSorter) sorter).getMerges());
 
         } else if(sorter instanceof QuickSorter){
-            System.out.printf(" --> Comparisons: %10d \n", ((QuickSorter) sorter).getComparisons());
-            System.out.printf(" --> Partitions: %10d \n", ((QuickSorter) sorter).getPartitions());
+            System.out.printf("    --> Comparisons: %10d \n", ((QuickSorter) sorter).getComparisons());
+            System.out.printf("    --> Partitions:  %10d \n", ((QuickSorter) sorter).getPartitions());
         }
 
         //System.out.printf("Time elapsed since execution start: %.2f ms\n", (timeElapsed * Math.pow(10,-6)));
