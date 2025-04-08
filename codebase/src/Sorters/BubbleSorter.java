@@ -1,47 +1,61 @@
 package Sorters;
+import java.util.Arrays;
 import java.util.Collections;
-import java.util.LinkedList;
+import java.util.List;
 
 public class BubbleSorter {
-    public static void sort(LinkedList<Integer> list) {
-        int listLength = list.size();
+
+    //Data fields
+
+
+    //Swap function, copied from QuickSort
+    private static void swap(Double[] list, int indexA, int indexB){
+        double temp = list[indexA];
+        list[indexA] = list[indexB];
+        list[indexB] = temp;
+    }
+
+    //Double Array Implemented
+    public static void sort(Double[] list) {
+        int arrayLength = list.length;
         int swaps = 0;
         int passes = 0;
 
         //Sorting
-        for (int i = 0; i < listLength - 1; i++) {
+        for (int i = 0; i < arrayLength - 1; i++) {
             passes++;
-            for (int j = 0; j < listLength - i - 1; j++) {
-                if (list.get(j) > list.get(j + 1)) {
+            for (int j = 0; j < arrayLength - i - 1; j++) {
+                if (list[j] > list[j + 1]) {
                     //Swapping them numbers
-                    int temporary = list.get(j);
-                    list.set(j, list.get(j + 1));
-                    list.set(j + 1, temporary);
+                    swap(list, j, j + 1);
                     swaps++;
                 }
             }
         }
-        //System.out.println("Sorted list using a non-optimised BubbleSort: " + list);
-        //System.out.println("Number of swaps: " + swaps);
-        //System.out.println("Number of passes: " + passes);
+        System.out.println("Sorted list using a non-optimised Bubble Sort: ");
+        for (double num : list) {
+            System.out.print(num + ", ");
+        }
+        System.out.println("\nNumber of swaps: " + swaps);
+        System.out.println("Number of passes: " + passes + "\n");
     }
 
 
-    public static void optimisedSort(LinkedList<Integer> list) {
-        int listLength = list.size();
+    public static void optimisedSort(Double[] list) {
+        int arrayLength = list.length;
         boolean swapped;
         int swaps = 0;
         int passes = 0;
         int lastSwapPosition;
-        int end = listLength - 1;
+        int end = arrayLength - 1;
 
         do {
             swapped = false;
             lastSwapPosition = 0;
             passes++;
             for (int j = 0; j < end; j++) {
-                if (list.get(j) > list.get(j + 1)) {
-                    Collections.swap(list, j, j + 1);
+                if (list[j] > list[j + 1]) {
+                    swap(list, j, j + 1);
                     swapped = true;
                     swaps++;
                     lastSwapPosition = j;
@@ -50,25 +64,62 @@ public class BubbleSorter {
             end = lastSwapPosition;
         } while (swapped);
 
-        //System.out.println("Sorted list using an optimised BubbleSort: " + list);
-        //System.out.println("Number of swaps: " + swaps);
-        //System.out.println("Number of passes: " + passes);
+        System.out.println("Sorted list using an optimised Bubble Sort: ");
+        for (double num : list) {
+            System.out.print(num + ", ");
+        }
+        System.out.println("\nNumber of swaps: " + swaps);
+        System.out.println("Number of passes: " + passes + "\n");
     }
 
 
     public static void main(String[] args) {
 
-        LinkedList<Integer> testList = new LinkedList<>();
-        for (int i = 1; i <= 100; i++) {
-            testList.add(i);
+        Double[] testList = new Double[10];
+        for (int i = 0; i <= 9; i++) {
+            testList[i] = (double) (i + 1);
         }
 
-        // Warm-up phase
+        List<Double> list = Arrays.asList(testList);
+        Collections.shuffle(list);
+        testList = list.toArray(new Double[0]);
+
+        System.out.println("Before sorting: ");
+        for (double num : list) {
+            System.out.print(num + ", ");
+        }
+        System.out.println("\n");
+
+        //Optimised version
+        Double[] optimisedList = Arrays.copyOf(testList, testList.length);
+        long startOpt = System.nanoTime();
+        optimisedSort(optimisedList);
+        long endOpt = System.nanoTime();
+        long timeOpt = endOpt - startOpt;
+        System.out.println("\nTime taken with an optimised Bubble Sort: ");
+
+
+        //Non-optimised version
+        Double[] nonOptimisedList = Arrays.copyOf(testList, testList.length);
+        long startNonOptimised = System.nanoTime();
+        optimisedSort(nonOptimisedList);
+        long endNonOptimised = System.nanoTime();
+        long timeNoOpt = endNonOptimised - startNonOptimised;
+        System.out.println("\nTime taken with non-optimised Bubble Sort: ");
+
+
+        //Calculating difference in time
+        System.out.println("\nDifference in time: " + (timeNoOpt - timeOpt) + " nanoseconds");
+
+
+
+
+        /* FOR BENCHMARKING - Warm-Up Phase
         for (int i = 0; i < 10; i++) {
-            LinkedList<Integer> tempList = new LinkedList<>(testList);
+            ArrayList<Double> tempList = new ArrayList<>(testList);
             Collections.shuffle(tempList);
-            sort(new LinkedList<>(tempList));
-            optimisedSort(new LinkedList<>(tempList));
+            sort(new ArrayList<>(tempList));
+            optimisedSort(new ArrayList<>(tempList));
         }
 
         long timeOptTotal = 0;
@@ -94,37 +145,7 @@ public class BubbleSorter {
         }
 
         System.out.println("Average time taken with optimised BubbleSort: " + (timeOptTotal / iterations) + " nanoseconds");
-        System.out.println("Average time taken with non-optimised BubbleSort: " + (timeNoOptTotal / iterations) + " nanoseconds");
+        System.out.println("Average time taken with non-optimised BubbleSort: " + (timeNoOptTotal / iterations) + " nanoseconds"); */
 
-
-
-        /* COMMENTED OUT FOR TESTING WITH BENCHMARKKING
-        LinkedList<Integer> testList = new LinkedList<>();
-        for (int i = 1; i <= 100; i++) {
-            testList.add(i);
-        }
-        Collections.shuffle(testList);
-
-        //Optimised version
-        System.out.println("\nBefore sorting with an optimised BubbleSort: " + testList);
-        long startTimeOpt = System.nanoTime();
-        optimisedSort(new LinkedList<>(testList));
-        long endTimeOpt = System.nanoTime();
-        long timeOpt = endTimeOpt - startTimeOpt;
-        System.out.println("Time taken with an optimised BubbleSort: " + timeOpt + " nanoseconds");
-
-
-        //Non-optimised version
-        System.out.println("\nBefore sorting with non-optimised BubbleSort: " + testList);
-        long startTimeNoOpt = System.nanoTime();
-        sort(new LinkedList<>(testList));
-        long endTimeNoOpt = System.nanoTime();
-        long timeNoOpt = endTimeNoOpt - startTimeNoOpt;
-        System.out.println("Time taken with a non-optimised BubbleSort: " + timeNoOpt + " nanoseconds");
-
-
-        //Calculating difference in time
-        System.out.println("\nDifference in time: " + (timeNoOpt - timeOpt) + " nanoseconds");
-        */
     }
 }
