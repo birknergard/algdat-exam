@@ -1,72 +1,94 @@
 package Sorters;
-import java.util.LinkedList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 public class MergeSorter {
 
-    public static void sort(LinkedList<Integer> list) {
-        int listLength = list.size();
+    //Data fields
+
+
+
+    public static void sort(Double[] list) {
+        int listLength = list.length;
         if (listLength < 2) {
             return;
         }
 
         int middle = listLength / 2;
-        LinkedList<Integer> leftHalf = new LinkedList<>();
-        LinkedList<Integer> rightHalf = new LinkedList<>();
+        Double[] leftHalf = new Double[middle];
+        Double[] rightHalf = new Double[listLength - middle];
 
         for (int i = 0; i < middle; i++) {
-            leftHalf.add(list.get(i));
+            leftHalf[i] = list[i];
         }
 
         for (int i = middle; i < listLength; i++) {
-            rightHalf.add(list.get(i));
+            rightHalf[i - middle] = list[i];
         }
 
         //Recursive calls for both halves
         sort(leftHalf);
         sort(rightHalf);
 
-        //Merging the sorted halves
-        list.clear();
-        int i = 0, j = 0;
+        //Merging the sorted halves with merge()
+        merge(list, leftHalf, rightHalf);
+    }
 
-        while (i < leftHalf.size() && j < rightHalf.size()) {
-            if (leftHalf.get(i) <= rightHalf.get(j)) {
-                list.add(leftHalf.get(i));
-                i++;
+
+
+    //Merge function to combine sorted halves
+    private static void merge(Double[] list, Double[] leftHalf, Double[] rightHalf) {
+        int i = 0, j = 0, k = 0;
+        int leftSize = leftHalf.length;
+        int rightSize = rightHalf.length;
+
+
+        while (i < leftSize && j < rightSize) {
+            if (leftHalf[i] <= rightHalf[j]) {
+                list[k++] = leftHalf[i++];
             } else {
-                list.add(rightHalf.get(j));
-                j++;
+                list[k++] = rightHalf[j++];
             }
         }
 
-        //Add the remaining elements from the left half
-        while (i < leftHalf.size()) {
-            list.add(leftHalf.get(i));
-            i++;
+        while (i < leftSize) {
+            list[k++] = leftHalf[i++];
         }
 
-        //Add remaining elements from the right half
-        while (j < rightHalf.size()) {
-            list.add(rightHalf.get(j));
-            j++;
+        while (j < rightSize) {
+            list[k++] = rightHalf[j++];
         }
     }
 
+
+
     public static void main(String[] args) {
 
-        LinkedList<Integer> testList = new LinkedList<>();
-        for (int i = 1; i <= 10; i++) {
-            testList.add(i);
+        Double[] testList = new Double[10];
+        for (int i = 0; i <= 9; i++) {
+            testList[i] = (double) (i + 1);
         }
-        Collections.shuffle(testList);
 
-        System.out.println("\nBefore sorting with MergeSort: " + testList);
+        List<Double> list = Arrays.asList(testList);
+        Collections.shuffle(list);
+        testList = list.toArray(new Double[0]);
+
+        System.out.println("Before sorting: ");
+        for (double num : list) {
+            System.out.print(num + ", ");
+        }
+        System.out.println("\n");
+
         long startTimeOpt = System.nanoTime();
         sort(testList);
         long endTimeOpt = System.nanoTime();
         long timeOpt = endTimeOpt - startTimeOpt;
-        System.out.println("After sorting with MergeSort: " + testList);
+
+        System.out.println("After sorting with MergeSort: ");
+        for (double num : testList) {
+            System.out.print(num + ", ");
+        }
         System.out.println("\nTime taken with MergeSort: " + timeOpt + " nanoseconds");
     }
 }
