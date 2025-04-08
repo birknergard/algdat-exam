@@ -3,7 +3,6 @@ import java.util.Collections;
 import java.util.LinkedList;
 
 public class BubbleSorter {
-
     public static void sort(LinkedList<Integer> list) {
         int listLength = list.size();
         int swaps = 0;
