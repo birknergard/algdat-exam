@@ -48,14 +48,14 @@ public class BubbleSorter implements Sorter{
                 int end = arrayLength - 1;
 
                 do {
+                    this.logPasses++;
                     swapped = false;
                     lastSwapPosition = 0;
-                    this.logPasses++;
                     for (int j = 0; j < end; j++) {
                         if (list[j] > list[j + 1]) {
+                            this.logSwaps++;
                             swap(list, j, j + 1);
                             swapped = true;
-                            this.logSwaps++;
                             lastSwapPosition = j;
                         }
                     }
@@ -68,10 +68,8 @@ public class BubbleSorter implements Sorter{
                     this.logPasses++;
                     for (int j = 0; j < arrayLength - 1; j++) {
                         if (list[j] > list[j + 1]) {
-
-                            // swapping
-                            swap(list, j, j + 1);
                             this.logSwaps++;
+                            swap(list, j, j + 1);
                         }
                     }
                 }

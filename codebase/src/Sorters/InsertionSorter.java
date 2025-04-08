@@ -19,7 +19,7 @@ public class InsertionSorter implements Sorter{
         double unsortedElement;
 
         for(int unsortedElementIndex = 1; unsortedElementIndex < listLength; unsortedElementIndex++){
-            logOperations++;
+            // logOperations++;
             int insertionComparatorElementIndex = unsortedElementIndex - 1;
 
             if(list[unsortedElementIndex] < list[insertionComparatorElementIndex]){
