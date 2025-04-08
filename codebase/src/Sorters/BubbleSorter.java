@@ -45,14 +45,6 @@ public class BubbleSorter implements Sorter{
                     }
                     end = lastSwapPosition;
                 } while (swapped);
-
-                /*System.out.println("Sorted list using an optimised Bubble Sort: ");
-                for (double num : list) {
-                    System.out.print(num + ", ");
-                }
-                //System.out.println("\nNumber of swaps: " + swaps);
-                //System.out.println("Number of passes: " + passes + "\n");
-                 */
                 break;
 
             case 0:
@@ -60,20 +52,15 @@ public class BubbleSorter implements Sorter{
                     this.passes++;
                     for (int j = 0; j < arrayLength - 1; j++) {
                         if (list[j] > list[j + 1]) {
-                            //Swapping them numbers
+
+                            // swapping
                             swap(list, j, j + 1);
                             this.swaps++;
                         }
                     }
                 }
-                /*System.out.println("Sorted list using a non-optimised Bubble Sort: ");
-                for (double num : list) {
-                    System.out.print(num + ", ");
-                }
-                System.out.println("\nNumber of swaps: " + swaps);
-                System.out.println("Number of passes: " + passes + "\n");
-                 */
                 break;
+
             default:
                 System.out.println("Invalid flag. Needs to be either 0 (optimized) or 1 (unoptimized).");
                 break;
@@ -106,7 +93,6 @@ public class BubbleSorter implements Sorter{
         long timeOpt = endOpt - startOpt;
         System.out.println("\nTime taken with an optimised Bubble Sort: ");
 
-
         //Non-optimised version
         Double[] nonOptimisedList = Arrays.copyOf(testList, testList.length);
         long startNonOptimised = System.nanoTime();
@@ -114,14 +100,8 @@ public class BubbleSorter implements Sorter{
         long endNonOptimised = System.nanoTime();
         long timeNoOpt = endNonOptimised - startNonOptimised;
         System.out.println("\nTime taken with non-optimised Bubble Sort: ");
-
-
         //Calculating difference in time
         System.out.println("\nDifference in time: " + (timeNoOpt - timeOpt) + " nanoseconds");
-
-
-
-
         /* FOR BENCHMARKING - Warm-Up Phase
         for (int i = 0; i < 10; i++) {
             ArrayList<Double> tempList = new ArrayList<>(testList);
