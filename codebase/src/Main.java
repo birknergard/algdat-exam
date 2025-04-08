@@ -16,7 +16,7 @@ public class Main {
 
         System.out.printf("Starting sort execution on list of size %d...\n\n", list.length);
         long startTime = System.nanoTime();
-        operations = sorter.sort(list);
+        sorter.sort(list, 0);
         long timeSorting = System.nanoTime() - startTime;
         System.out.println("Sorting algorithm complete! Verifying...");
 
