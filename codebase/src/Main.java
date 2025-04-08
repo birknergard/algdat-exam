@@ -76,6 +76,7 @@ public class Main {
             // TODO: Bubble sort
 
             // TODO: Insertion sort testing
+            InsertionSorter insertionSorter = new InsertionSorter();
             testSort(new InsertionSorter(), latitudesArray, 5_000_000);
 
             // TODO: Merge sort

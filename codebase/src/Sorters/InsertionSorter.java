@@ -1,12 +1,19 @@
 package Sorters;
 
 public class InsertionSorter implements Sorter{
+
+    int operations;
+
+    public InsertionSorter(){
+        operations = 0;
+    }
+
     public int sort(Double[] list){
-        int operations = 0;
         int listLength = list.length;
         double unsortedElement;
 
         for(int unsortedElementIndex = 1; unsortedElementIndex < listLength; unsortedElementIndex++){
+            operations++;
             int insertionComparatorElementIndex = unsortedElementIndex - 1;
 
             if(list[unsortedElementIndex] < list[insertionComparatorElementIndex]){
@@ -14,6 +21,7 @@ public class InsertionSorter implements Sorter{
                 unsortedElement = list[unsortedElementIndex];
 
                 while(insertionComparatorElementIndex >= 0){
+                    operations++;
                     // shift copy
                     list[insertionComparatorElementIndex + 1] = list[insertionComparatorElementIndex];
 
@@ -30,7 +38,8 @@ public class InsertionSorter implements Sorter{
             }
         }
 
-        return operations;
+        operations += 8;
+        return 0;
     }
 
     /* For internal testing
