@@ -1,12 +1,7 @@
 package Sorters;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.LinkedList;
 
-public class InsertionSorter {
-    public static int sort(Double[] list){
+public class InsertionSorter implements Sorter{
+    public int sort(Double[] list){
         int operations = 0;
         int listLength = list.length;
         double unsortedElement;
@@ -38,7 +33,7 @@ public class InsertionSorter {
         return operations;
     }
 
-    // For internal testing
+    /* For internal testing
     public static void main(String[] args) {
         ArrayList<Double> testList = new ArrayList<>();
         // Generate a large randomized list for testing
@@ -60,4 +55,5 @@ public class InsertionSorter {
         System.out.println(Arrays.toString(array));
         System.out.printf("Iteration count: %d\n", iterations);
     }
+     */
 }

@@ -1,7 +1,6 @@
 import DataHandling.City;
-import Sorters.QuickSorter;
+import Sorters.Sorter;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Collections;
@@ -33,7 +32,6 @@ public class Main {
         // omits first index size we are comparing two adjacent elements at a time,
         // in order to prevent out of bounds exception
         for(int i = 1; i < list.size(); i++){
-
             // Returns false if unordered elements are found
             if(list.get(i-1) > list.get(i)) return false;
         }
