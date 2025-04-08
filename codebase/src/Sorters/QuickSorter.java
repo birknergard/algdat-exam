@@ -1,13 +1,6 @@
 package Sorters;
 
-import javax.xml.transform.Source;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.LinkedList;
-
 public class QuickSorter implements Sorter{
-
     int partitions;
     int operations;
 
@@ -16,14 +9,15 @@ public class QuickSorter implements Sorter{
        operations = 0;
     }
 
+    // 3 operations
     private void swap(Double[] list, int indexA, int indexB){
         double temp = list[indexA];
         list[indexA] = list[indexB];
         list[indexB] = temp;
     }
 
-    // Hoare partitioning
     private int partitionHoare(Double[] list, int lowerBoundaryIndex, int higherBoundaryIndex, boolean withRandomIndex){
+        partitions++;
         double pivot;
         if(withRandomIndex) {
             // with random pivot(index), it can not be first or last element
@@ -56,6 +50,7 @@ public class QuickSorter implements Sorter{
 
     // Lomuto partitioning
     private int partitionLom(Double[] list, int lowerBoundaryIndex, int higherBoundaryIndex){
+        partitions++;
         double pivotValue = list[higherBoundaryIndex];
         System.out.printf("Pivot for partition: %.2f\n", pivotValue);
 
