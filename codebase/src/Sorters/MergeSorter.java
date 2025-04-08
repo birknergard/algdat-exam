@@ -22,8 +22,6 @@ public class MergeSorter implements Sorter{
     }
 
     public void sort(Double[] list, int flag) {
-        this.logMerges = 0;
-
         int listLength = list.length;
         if (listLength < 2) {
             return;

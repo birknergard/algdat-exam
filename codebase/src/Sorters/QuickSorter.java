@@ -126,6 +126,9 @@ public class QuickSorter implements Sorter{
     }
 
     public void sort(Double[] list, int flag){
+        this.logComparisons = 0;
+        this.logPartitions = 0;
+        this.logOperations = 0;
         quickSortRec(list, 0, list.length - 1, flag);
     }
 
