@@ -19,7 +19,6 @@ public class InsertionSorter {
                 unsortedElement = list[unsortedElementIndex];
 
                 while(insertionComparatorElementIndex >= 0){
-
                     // shift copy
                     list[insertionComparatorElementIndex + 1] = list[insertionComparatorElementIndex];
 
