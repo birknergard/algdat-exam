@@ -1,8 +1,5 @@
 import DataHandling.City;
-import Sorters.BubbleSorter;
-import Sorters.InsertionSorter;
-import Sorters.QuickSorter;
-import Sorters.Sorter;
+import Sorters.*;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -14,7 +11,7 @@ public class Main {
     // Method used for running sorting algorithms. Includes printing of messages and tracks time.
     public static boolean testSort(Sorter sorter, Double[] list, int flag){
         boolean wasSorted;
-        System.out.println("Creating copy of array to sort ...");
+        //System.out.println("Creating copy of array to sort ...");
         Double[] unsortedArray = list.clone();
 
 
@@ -28,7 +25,7 @@ public class Main {
         sorter.sort(unsortedArray, flag);
         long timeSorting = System.nanoTime() - startTime;
 
-        System.out.println("Sorting algorithm complete! Verifying...");
+        //System.out.println("Sorting algorithm complete! Verifying...");
 
         wasSorted = isSorted(unsortedArray);
 
@@ -36,8 +33,8 @@ public class Main {
         if(!wasSorted) System.out.println("Sorting algorithm failed in sorting list!");
 
         long timeElapsed = System.nanoTime() - startTime;
-        System.out.printf("\n --> Time for sorting: %.2f ms\n", (timeSorting * Math.pow(10,-6)));
-        System.out.printf("Time elapsed since execution start: %.2f ms\n", (timeElapsed * Math.pow(10,-6)));
+        System.out.printf("\n ---->> Sort execution time: %.2f ms\n", (timeSorting * Math.pow(10,-6)));
+        //System.out.printf("Time elapsed since execution start: %.2f ms\n", (timeElapsed * Math.pow(10,-6)));
         return wasSorted;
     }
 
@@ -83,35 +80,44 @@ public class Main {
             Double[] latitudesArray = latitudes.toArray(new Double[0]);
 
             // Bubble sort
-            System.out.println("\n\nBUBBLE SORT");
+            System.out.println("\n\nREGULAR BUBBLE SORT");
             System.out.println("_______________________________________________________________________");
             BubbleSorter bubbleSorter = new BubbleSorter();
             // Dry run
             bubbleSorter.sort(latitudesArray.clone(), 0);
+
+            // Running regular bubble sort
             testSort(bubbleSorter, latitudesArray, 0);
+
+            System.out.println("\n\nOPTIMIZED BUBBLE SORT");
+            System.out.println("_______________________________________________________________________");
             testSort(bubbleSorter, latitudesArray, 1);
 
-            /* Insertion sort testing
+            // Insertion sort testing
             System.out.println("\n\nINSERTION SORT");
             System.out.println("_______________________________________________________________________");
             InsertionSorter insertionSorter = new InsertionSorter();
             testSort(insertionSorter, latitudesArray, 0);
-             */
 
-            /* TODO: Merge sort
-            System.out.println("MERGE SORT");
+            // Merge sort
+            System.out.println("\n\nMERGE SORT");
             System.out.println("_______________________________________________________________________");
-             */
+            MergeSorter mergeSorter = new MergeSorter();
+            testSort(mergeSorter, latitudesArray, 0);
 
-
-            /* Quick sort
-            System.out.println("\n\nQUICK SORT");
+            // Quick sort
+            System.out.println("\n\nQUICK SORT WITH PIVOT LAST (Lomuto)");
             System.out.println("_______________________________________________________________________");
             QuickSorter quickSorter = new QuickSorter();
             testSort(quickSorter, latitudesArray, 0);
-             */
 
-            // Print output from sorting method
+            System.out.println("\n\nQUICK SORT WITH PIVOT FIRST (Hoare)");
+            System.out.println("_______________________________________________________________________");
+            testSort(quickSorter, latitudesArray, 1);
+
+            System.out.println("\n\nQUICK SORT WITH RANDOM FIRST PIVOT (Hoare)");
+            System.out.println("_______________________________________________________________________");
+            testSort(quickSorter, latitudesArray, 2);
 
         } catch (FileNotFoundException e){
             System.out.println("Could not load file.");
