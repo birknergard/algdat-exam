@@ -1,4 +1,5 @@
 import DataHandling.City;
+import Sorters.InsertionSorter;
 import Sorters.Sorter;
 
 import java.io.FileInputStream;
@@ -11,12 +12,13 @@ public class Main {
     // Method used for running sorting algorithms. Includes printing of messages and tracks time.
     public static boolean testSort(Sorter sorter, Double[] list, int maxOperations){
         int operations = 0;
-        long startTime = System.nanoTime();
         boolean wasSorted;
 
-        System.out.printf("Starting sort execution on list of size %d...\n", list.length);
-        sorter.sort(list);
-        System.out.println("Sorting algorithm complete! Verifying...\n");
+        System.out.printf("Starting sort execution on list of size %d...\n\n", list.length);
+        long startTime = System.nanoTime();
+        operations = sorter.sort(list);
+        long timeSorting = System.nanoTime() - startTime;
+        System.out.println("Sorting algorithm complete! Verifying...");
 
         wasSorted = isSorted(list);
 
@@ -24,7 +26,9 @@ public class Main {
         if(!wasSorted) System.out.println("Sorting algorithm failed in sorting list!");
 
         long timeElapsed = System.nanoTime() - startTime;
-        System.out.printf("Time elapsed since execution start: %.2f ms", (timeElapsed * Math.pow(10,-6)));
+        System.out.printf("\nTime for sorting: %.2f ms\n", (timeSorting * Math.pow(10,-6)));
+        System.out.printf("\nNumber of operations: %d\n", operations);
+        System.out.printf("Time elapsed since execution start: %.2f ms\n", (timeElapsed * Math.pow(10,-6)));
         return wasSorted;
     }
 
@@ -50,7 +54,7 @@ public class Main {
             Scanner reader = new Scanner(new FileInputStream("../worldcities.csv"));
 
             // Skipping the first line (its just category names)
-            System.out.println(reader.nextLine());
+            reader.nextLine();
 
             // Parsing data into data structure
             while(reader.hasNext()){
@@ -65,13 +69,14 @@ public class Main {
                //System.out.println(latitudes);
 
             // Randomize order of list so its unsorted
-            Collections.shuffle(latitudes);
-            // Use data structure (LinkedList) in sorting methods
+            //Collections.shuffle(latitudes);
+            // Convert datastructure (LinkedList) to static array (Double[]) for use in sorting methods
+            Double[] latitudesArray = latitudes.toArray(new Double[0]);
 
             // TODO: Bubble sort
 
             // TODO: Insertion sort testing
-
+            testSort(new InsertionSorter(), latitudesArray, 5_000_000);
 
             // TODO: Merge sort
 
