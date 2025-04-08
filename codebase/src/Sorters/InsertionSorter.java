@@ -2,10 +2,14 @@ package Sorters;
 
 public class InsertionSorter implements Sorter{
 
-    int logOperations;
+    private int logOperations;
 
     public InsertionSorter(){
         logOperations = 0;
+    }
+
+    public int getOperations() {
+        return logOperations;
     }
 
     public void sort(Double[] list, int flag){

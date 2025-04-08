@@ -4,14 +4,26 @@ import java.util.Collections;
 import java.util.LinkedList;
 
 public class QuickSorter implements Sorter{
-    int logPartitions;
-    int logComparisons;
-    int logOperations;
+    private int logPartitions;
+    private int logComparisons;
+    private int logOperations;
 
     public QuickSorter(){
-       logPartitions = 0;
-       logOperations = 0;
-       logComparisons = 0;
+       this.logPartitions = 0;
+       this.logOperations = 0;
+       this.logComparisons = 0;
+    }
+
+    public int getOperations() {
+        return this.logOperations;
+    }
+
+    public int getComparisons() {
+        return this.logComparisons;
+    }
+
+    public int getPartitions() {
+        return this.logPartitions;
     }
 
     // 3 operations

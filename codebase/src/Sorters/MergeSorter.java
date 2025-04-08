@@ -5,12 +5,20 @@ import java.util.List;
 
 public class MergeSorter implements Sorter{
     //Data fields
-    int logMerges;
-    int logOperations;
+    private int logMerges;
+    private int logOperations;
 
     public MergeSorter(){
        this.logMerges = 0;
        this.logOperations = 0;
+    }
+
+    public int getOperations() {
+        return this.logOperations;
+    }
+
+    public int getMerges() {
+        return this.logMerges;
     }
 
     public void sort(Double[] list, int flag) {

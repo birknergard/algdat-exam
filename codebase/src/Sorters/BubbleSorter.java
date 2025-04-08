@@ -5,14 +5,26 @@ import java.util.List;
 
 public class BubbleSorter implements Sorter{
     //Data fields
-    int logSwaps = 0;
-    int logPasses = 0;
-    int logOperations = 0;
+    private int logSwaps = 0;
+    private int logPasses = 0;
+    private int logOperations = 0;
 
     public BubbleSorter(){
         this.logSwaps = 0;
         this.logPasses = 0;
         this.logOperations = 0;
+    }
+
+    public int getOperations() {
+        return this.logOperations;
+    }
+
+    public int getPasses() {
+        return this.logPasses;
+    }
+
+    public int getSwaps() {
+        return this.logSwaps;
     }
 
     //Swap function, copied from QuickSorter
