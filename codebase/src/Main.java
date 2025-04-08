@@ -1,30 +1,63 @@
 import DataHandling.City;
-import Sorters.QuickSorter;
+import Sorters.*;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Scanner;
-public class Main {
 
-    // Prints the list (of latitudes/floats)
-    public static void printList(LinkedList<Double> list){
-        System.out.print("[");
-        for(int i = 0; i < list.size(); i++){
-            System.out.printf(" %.3f,", list.get(i));
+public class Main {
+    // Method used for running sorting algorithms. Includes printing of messages and tracks time.
+    public static boolean testSort(Sorter sorter, Double[] list, int flag){
+        boolean wasSorted;
+        //System.out.println("Creating copy of array to sort ...");
+        Double[] unsortedArray = list.clone();
+
+
+
+        System.out.printf("Starting sort execution on list of size %d...\n\n", list.length);
+        long startTime = System.nanoTime();
+        sorter.sort(unsortedArray, flag);
+        long timeSorting = System.nanoTime() - startTime;
+
+        //System.out.println("Sorting algorithm complete! Verifying...");
+
+        wasSorted = isSorted(unsortedArray);
+
+        if(wasSorted) System.out.println("Sorting algorithm successfully sorted list!");
+        if(!wasSorted) System.out.println("Sorting algorithm failed in sorting list!");
+
+        System.out.printf("\n ---->> Sort execution time: %.2f ms (%.4f s)\n", (timeSorting * Math.pow(10, -6)), timeSorting * Math.pow(10, -9));
+
+        // Extra logging based on sorting algorithm
+        if(sorter instanceof BubbleSorter){
+            System.out.printf("    --> Passes: %10d \n", ((BubbleSorter) sorter).getPasses());
+            System.out.printf("    --> Swaps:  %10d \n", ((BubbleSorter) sorter).getSwaps());
+
+        } else if(sorter instanceof InsertionSorter){
+            System.out.printf("    --> Operations: %10d \n", ((InsertionSorter) sorter).getOperations());
+
+        } else if(sorter instanceof MergeSorter){
+            System.out.printf("    --> Merges: %10d \n", ((MergeSorter) sorter).getMerges());
+
+        } else if(sorter instanceof QuickSorter){
+            System.out.printf("    --> Comparisons: %10d \n", ((QuickSorter) sorter).getComparisons());
+            System.out.printf("    --> Partitions:  %10d \n", ((QuickSorter) sorter).getPartitions());
         }
-        System.out.print("]\n");
+
+        //System.out.printf("Time elapsed since execution start: %.2f ms\n", (timeElapsed * Math.pow(10,-6)));
+        return wasSorted;
     }
 
-    public static boolean isSorted(LinkedList<Double> list){
+    private static boolean isSorted(Double[] list){
         // omits first index size we are comparing two adjacent elements at a time,
         // in order to prevent out of bounds exception
-        for(int i = 1; i < list.size(); i++){
+        for(int i = 1; i < list.length; i++){
             // Returns false if unordered elements are found
-            if(list.get(i-1) > list.get(i)) return false;
+            if(list[i-1] > list[i]) return false;
         }
+
         // If loop completed the list has to be sorted
         return true;
     }
@@ -39,7 +72,7 @@ public class Main {
             Scanner reader = new Scanner(new FileInputStream("../worldcities.csv"));
 
             // Skipping the first line (its just category names)
-            System.out.println(reader.nextLine());
+            reader.nextLine();
 
             // Parsing data into data structure
             while(reader.hasNext()){
@@ -51,25 +84,55 @@ public class Main {
                 var city = new City(csvString);
                 latitudes.add(city.getLat());
             }
-               printList(latitudes);
+               //System.out.println(latitudes);
 
             // Randomize order of list so its unsorted
-            Collections.shuffle(latitudes);
-            // Use data structure (LinkedList) in sorting methods
+            //Collections.shuffle(latitudes);
+            // Convert datastructure (LinkedList) to static array (Double[]) for use in sorting methods
+            Double[] latitudesArray = latitudes.toArray(new Double[0]);
 
-            // TODO: Bubble sort
+            // Bubble sort
+            System.out.println("\n\nREGULAR BUBBLE SORT");
+            System.out.println("_______________________________________________________________________");
+            BubbleSorter bubbleSorter = new BubbleSorter();
+            // Dry run
+            bubbleSorter.sort(latitudesArray.clone(), 0);
 
-            // TODO: Insertion sort
+            // Running regular bubble sort
+            testSort(bubbleSorter, latitudesArray, 0);
 
-            // TODO: Merge sort
+            System.out.println("\n\nOPTIMIZED BUBBLE SORT");
+            System.out.println("_______________________________________________________________________");
+            testSort(bubbleSorter, latitudesArray, 1);
 
-            // TODO: Quick sort
+            // Insertion sort testing
+            System.out.println("\n\nINSERTION SORT");
+            System.out.println("_______________________________________________________________________");
+            InsertionSorter insertionSorter = new InsertionSorter();
+            testSort(insertionSorter, latitudesArray, 0);
 
-            // Print output from sorting method
+            // Merge sort
+            System.out.println("\n\nMERGE SORT");
+            System.out.println("_______________________________________________________________________");
+            MergeSorter mergeSorter = new MergeSorter();
+            testSort(mergeSorter, latitudesArray, 0);
+
+            // Quick sort
+            System.out.println("\n\nQUICK SORT WITH PIVOT LAST (Lomuto)");
+            System.out.println("_______________________________________________________________________");
+            QuickSorter quickSorter = new QuickSorter();
+            testSort(quickSorter, latitudesArray, 0);
+
+            System.out.println("\n\nQUICK SORT WITH PIVOT FIRST (Hoare)");
+            System.out.println("_______________________________________________________________________");
+            testSort(quickSorter, latitudesArray, 1);
+
+            System.out.println("\n\nQUICK SORT WITH RANDOM FIRST PIVOT (Hoare)");
+            System.out.println("_______________________________________________________________________");
+            testSort(quickSorter, latitudesArray, 2);
 
         } catch (FileNotFoundException e){
             System.out.println("Could not load file.");
         }
     }
 }
-

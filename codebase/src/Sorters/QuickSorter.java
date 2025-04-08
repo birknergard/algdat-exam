@@ -1,24 +1,46 @@
 package Sorters;
 
-import javax.xml.transform.Source;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 
-public class QuickSorter {
+public class QuickSorter implements Sorter{
+    private int logPartitions;
+    private int logComparisons;
+    private int logOperations;
 
-    private static void swap(Double[] list, int indexA, int indexB){
+    public QuickSorter(){
+       this.logPartitions = 0;
+       this.logOperations = 0;
+       this.logComparisons = 0;
+    }
+
+    public int getOperations() {
+        return this.logOperations;
+    }
+
+    public int getComparisons() {
+        return this.logComparisons;
+    }
+
+    public int getPartitions() {
+        return this.logPartitions;
+    }
+
+    // 3 operations
+    private void swap(Double[] list, int indexA, int indexB){
         double temp = list[indexA];
         list[indexA] = list[indexB];
         list[indexB] = temp;
     }
 
-    // Hoare partitioning
-    private static int partitionHoare(Double[] list, int lowerBoundaryIndex, int higherBoundaryIndex, boolean withRandomIndex){
+    private int partitionHoare(Double[] list, int lowerBoundaryIndex, int higherBoundaryIndex, boolean withRandomIndex){
+        logPartitions++;
         double pivot;
         if(withRandomIndex) {
-            // with random pivot, it can not be first or last element
-            pivot = Math.floor(Math.random() * list.length - 1) + 1;
+            // with random pivot(index), it can not be first or last element
+            int pivotIndex = (int) Math.floor(Math.random() * list.length - 1) + 1;
+            pivot = list[pivotIndex];
+
         } else {
             // Sets pivot as low
             pivot = list[lowerBoundaryIndex];
@@ -28,14 +50,17 @@ public class QuickSorter {
 
         while(true){
             do{
+                logComparisons++;
                 left++;
             } while(list[left] < pivot);
 
             do {
+                logComparisons++;
                 right--;
             } while(list[right] > pivot);
 
             if(left >= right){
+                logComparisons++;
                 return right;
             }
 
@@ -44,13 +69,15 @@ public class QuickSorter {
     }
 
     // Lomuto partitioning
-    private static int partitionLom(Double[] list, int lowerBoundaryIndex, int higherBoundaryIndex){
+    private int partitionLom(Double[] list, int lowerBoundaryIndex, int higherBoundaryIndex){
+        logPartitions++;
         double pivotValue = list[higherBoundaryIndex];
-        System.out.printf("Pivot for partition: %.2f\n", pivotValue);
+        //System.out.printf("Pivot for partition: %.2f\n", pivotValue);
 
         //System.out.printf("PivotValue: %.2f\n", pivotValue);
         int iteratorI = lowerBoundaryIndex;
         for(int iteratorJ = lowerBoundaryIndex ; iteratorJ <= higherBoundaryIndex - 1; iteratorJ++){
+            logComparisons++;
             if(list[iteratorJ] <= pivotValue){
                 swap(list, iteratorJ, iteratorI);
                 iteratorI++;
@@ -63,7 +90,7 @@ public class QuickSorter {
         return iteratorI;
     }
 
-    private static void quickSortRec(Double[] list, int lowerBoundaryIndex, int higherBoundaryIndex, int partitionMethod){
+    private void quickSortRec(Double[] list, int lowerBoundaryIndex, int higherBoundaryIndex, int partitionMethod){
         // TODO: breakpoint
         if(lowerBoundaryIndex >= higherBoundaryIndex || lowerBoundaryIndex < 0 ){
             return;
@@ -73,39 +100,46 @@ public class QuickSorter {
             // Lomuto, pivot is last element
             case 0:
                 newPivotIndex = partitionLom(list, lowerBoundaryIndex, higherBoundaryIndex);
-                System.out.printf("Index of new pivot: %d\n", newPivotIndex);
-                quickSortRec(list, lowerBoundaryIndex, newPivotIndex - 1, partitionMethod);
-                quickSortRec(list, newPivotIndex + 1, higherBoundaryIndex, partitionMethod);
+                //System.out.printf("Index of new pivot: %d\n", newPivotIndex);
+                quickSortRec(list, lowerBoundaryIndex, newPivotIndex - 1, 0);
+                quickSortRec(list, newPivotIndex + 1, higherBoundaryIndex, 0);
                 break;
 
             // Hoare, pivot is first element
             case 1:
                 newPivotIndex = partitionHoare(list, lowerBoundaryIndex, higherBoundaryIndex, false);
-                quickSortRec(list, lowerBoundaryIndex, newPivotIndex, partitionMethod);
-                quickSortRec(list, newPivotIndex + 1, higherBoundaryIndex, partitionMethod);
+                quickSortRec(list, lowerBoundaryIndex, newPivotIndex, 1);
+                quickSortRec(list, newPivotIndex + 1, higherBoundaryIndex, 1);
                 break;
 
             // Hoare, first pivot is random(not first or last), then first element for each partition
             case 2:
                 newPivotIndex = partitionHoare(list, lowerBoundaryIndex, higherBoundaryIndex, true);
-                quickSortRec(list, lowerBoundaryIndex, newPivotIndex, partitionMethod);
-                quickSortRec(list, newPivotIndex + 1, higherBoundaryIndex, partitionMethod);
+                quickSortRec(list, lowerBoundaryIndex, newPivotIndex, 1);
+                quickSortRec(list, newPivotIndex + 1, higherBoundaryIndex, 1);
+                break;
+
+            default:
+                System.out.println("Incorrect sort flag for quicksort.");
+                break;
         }
     }
 
-    public static int sort(Double[] list){
-        quickSortRec(list, 0, list.length - 1, 1);
-
-        return 1;
+    public void sort(Double[] list, int flag){
+        this.logComparisons = 0;
+        this.logPartitions = 0;
+        this.logOperations = 0;
+        quickSortRec(list, 0, list.length - 1, flag);
     }
 
-    public static void main(String[] args) {
+    // For internal testing
+    public void internalTest() {
         LinkedList<Double> testList = new LinkedList<>();
         // Generate a large randomized list for testing
         for(int i = 0; i < 100; i++){
             testList.push(Math.floor(Math.random() * 100000) / 100);
         }
-        /*
+
         testList.clear();
         testList.add(1.0);
         testList.add(2.0);
@@ -115,16 +149,14 @@ public class QuickSorter {
         testList.add(6.0);
         testList.add(7.0);
         testList.add(8.0);
-         */
 
         Collections.shuffle(testList);
         Double[] array = testList.toArray(new Double[0]);
         System.out.print("Before sort: ");
         //System.out.println(testList);
 
-        int iterations = sort(array);
+        sort(array, 0);
         System.out.print("After sort: ");
-        //System.out.println(testList);
-        System.out.printf("Iteration count: %d\n", iterations);
+        //System.out.println(Arrays.toString(array));
     }
 }

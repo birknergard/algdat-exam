@@ -1,17 +1,25 @@
 package Sorters;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.LinkedList;
 
-public class InsertionSorter {
-    public static int sort(Double[] list){
-        int operations = 0;
+public class InsertionSorter implements Sorter{
+
+    private int logOperations;
+
+    public InsertionSorter(){
+        logOperations = 0;
+    }
+
+    public int getOperations() {
+        return logOperations;
+    }
+
+    public void sort(Double[] list, int flag){
+        this.logOperations = 0;
+
         int listLength = list.length;
         double unsortedElement;
 
         for(int unsortedElementIndex = 1; unsortedElementIndex < listLength; unsortedElementIndex++){
+            logOperations++;
             int insertionComparatorElementIndex = unsortedElementIndex - 1;
 
             if(list[unsortedElementIndex] < list[insertionComparatorElementIndex]){
@@ -19,6 +27,7 @@ public class InsertionSorter {
                 unsortedElement = list[unsortedElementIndex];
 
                 while(insertionComparatorElementIndex >= 0){
+                    logOperations++;
                     // shift copy
                     list[insertionComparatorElementIndex + 1] = list[insertionComparatorElementIndex];
 
@@ -35,10 +44,10 @@ public class InsertionSorter {
             }
         }
 
-        return operations;
+        logOperations += 8;
     }
 
-    // For internal testing
+    /* For internal testing
     public static void main(String[] args) {
         ArrayList<Double> testList = new ArrayList<>();
         // Generate a large randomized list for testing
@@ -60,4 +69,5 @@ public class InsertionSorter {
         System.out.println(Arrays.toString(array));
         System.out.printf("Iteration count: %d\n", iterations);
     }
+     */
 }

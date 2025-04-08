@@ -3,13 +3,25 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class MergeSorter {
-
+public class MergeSorter implements Sorter{
     //Data fields
+    private int logMerges;
+    private int logOperations;
 
+    public MergeSorter(){
+       this.logMerges = 0;
+       this.logOperations = 0;
+    }
 
+    public int getOperations() {
+        return this.logOperations;
+    }
 
-    public static void sort(Double[] list) {
+    public int getMerges() {
+        return this.logMerges;
+    }
+
+    public void sort(Double[] list, int flag) {
         int listLength = list.length;
         if (listLength < 2) {
             return;
@@ -28,17 +40,16 @@ public class MergeSorter {
         }
 
         //Recursive calls for both halves
-        sort(leftHalf);
-        sort(rightHalf);
+        sort(leftHalf, 0);
+        sort(rightHalf, 0);
 
         //Merging the sorted halves with merge()
         merge(list, leftHalf, rightHalf);
     }
 
-
-
     //Merge function to combine sorted halves
-    private static void merge(Double[] list, Double[] leftHalf, Double[] rightHalf) {
+    private void merge(Double[] list, Double[] leftHalf, Double[] rightHalf) {
+        logMerges++;
         int i = 0, j = 0, k = 0;
         int leftSize = leftHalf.length;
         int rightSize = rightHalf.length;
@@ -61,10 +72,7 @@ public class MergeSorter {
         }
     }
 
-
-
-    public static void main(String[] args) {
-
+    public void internalTest(String[] args) {
         Double[] testList = new Double[10];
         for (int i = 0; i <= 9; i++) {
             testList[i] = (double) (i + 1);
@@ -81,7 +89,7 @@ public class MergeSorter {
         System.out.println("\n");
 
         long startTimeOpt = System.nanoTime();
-        sort(testList);
+        sort(testList, 0);
         long endTimeOpt = System.nanoTime();
         long timeOpt = endTimeOpt - startTimeOpt;
 
