@@ -2,6 +2,7 @@ package Sorters;
 
 import javax.xml.transform.Source;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
 
@@ -17,8 +18,10 @@ public class QuickSorter {
     private static int partitionHoare(Double[] list, int lowerBoundaryIndex, int higherBoundaryIndex, boolean withRandomIndex){
         double pivot;
         if(withRandomIndex) {
-            // with random pivot, it can not be first or last element
-            pivot = Math.floor(Math.random() * list.length - 1) + 1;
+            // with random pivot(index), it can not be first or last element
+            int pivotIndex = (int) Math.floor(Math.random() * list.length - 1) + 1;
+            pivot = list[pivotIndex];
+
         } else {
             // Sets pivot as low
             pivot = list[lowerBoundaryIndex];
@@ -74,22 +77,23 @@ public class QuickSorter {
             case 0:
                 newPivotIndex = partitionLom(list, lowerBoundaryIndex, higherBoundaryIndex);
                 System.out.printf("Index of new pivot: %d\n", newPivotIndex);
-                quickSortRec(list, lowerBoundaryIndex, newPivotIndex - 1, partitionMethod);
-                quickSortRec(list, newPivotIndex + 1, higherBoundaryIndex, partitionMethod);
+                quickSortRec(list, lowerBoundaryIndex, newPivotIndex - 1, 0);
+                quickSortRec(list, newPivotIndex + 1, higherBoundaryIndex, 0);
                 break;
 
             // Hoare, pivot is first element
             case 1:
                 newPivotIndex = partitionHoare(list, lowerBoundaryIndex, higherBoundaryIndex, false);
-                quickSortRec(list, lowerBoundaryIndex, newPivotIndex, partitionMethod);
-                quickSortRec(list, newPivotIndex + 1, higherBoundaryIndex, partitionMethod);
+                quickSortRec(list, lowerBoundaryIndex, newPivotIndex, 1);
+                quickSortRec(list, newPivotIndex + 1, higherBoundaryIndex, 1);
                 break;
 
             // Hoare, first pivot is random(not first or last), then first element for each partition
             case 2:
                 newPivotIndex = partitionHoare(list, lowerBoundaryIndex, higherBoundaryIndex, true);
-                quickSortRec(list, lowerBoundaryIndex, newPivotIndex, partitionMethod);
-                quickSortRec(list, newPivotIndex + 1, higherBoundaryIndex, partitionMethod);
+                quickSortRec(list, lowerBoundaryIndex, newPivotIndex, 1);
+                quickSortRec(list, newPivotIndex + 1, higherBoundaryIndex, 1);
+                break;
         }
     }
 
@@ -124,7 +128,7 @@ public class QuickSorter {
 
         int iterations = sort(array);
         System.out.print("After sort: ");
-        //System.out.println(testList);
+        //System.out.println(Arrays.toString(array));
         System.out.printf("Iteration count: %d\n", iterations);
     }
 }
