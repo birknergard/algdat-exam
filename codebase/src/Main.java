@@ -14,22 +14,29 @@ public class Main {
     // Method used for running sorting algorithms. Includes printing of messages and tracks time.
     public static boolean testSort(Sorter sorter, Double[] list, int flag){
         boolean wasSorted;
-        System.out.printf("Creating copy of array to sort %d...\n\n", list.length);
+        System.out.println("Creating copy of array to sort ...");
         Double[] unsortedArray = list.clone();
+
+
+        /*if(sorter instanceof BubbleSorter){
+            System.out.println("Performing dry run ...");
+            sorter.sort(list.clone(),1);
+        }*/
 
         System.out.printf("Starting sort execution on list of size %d...\n\n", list.length);
         long startTime = System.nanoTime();
         sorter.sort(unsortedArray, flag);
         long timeSorting = System.nanoTime() - startTime;
+
         System.out.println("Sorting algorithm complete! Verifying...");
 
-        wasSorted = isSorted(list);
+        wasSorted = isSorted(unsortedArray);
 
         if(wasSorted) System.out.println("Sorting algorithm successfully sorted list!");
         if(!wasSorted) System.out.println("Sorting algorithm failed in sorting list!");
 
         long timeElapsed = System.nanoTime() - startTime;
-        System.out.printf("\nTime for sorting: %.2f ms\n", (timeSorting * Math.pow(10,-6)));
+        System.out.printf("\n --> Time for sorting: %.2f ms\n", (timeSorting * Math.pow(10,-6)));
         System.out.printf("Time elapsed since execution start: %.2f ms\n", (timeElapsed * Math.pow(10,-6)));
         return wasSorted;
     }
@@ -75,19 +82,34 @@ public class Main {
             // Convert datastructure (LinkedList) to static array (Double[]) for use in sorting methods
             Double[] latitudesArray = latitudes.toArray(new Double[0]);
 
-            // TODO: Bubble sort
+            // Bubble sort
+            System.out.println("\n\nBUBBLE SORT");
+            System.out.println("_______________________________________________________________________");
             BubbleSorter bubbleSorter = new BubbleSorter();
+            // Dry run
+            bubbleSorter.sort(latitudesArray.clone(), 0);
             testSort(bubbleSorter, latitudesArray, 0);
+            testSort(bubbleSorter, latitudesArray, 1);
 
-            // TODO: Insertion sort testing
+            /* Insertion sort testing
+            System.out.println("\n\nINSERTION SORT");
+            System.out.println("_______________________________________________________________________");
             InsertionSorter insertionSorter = new InsertionSorter();
             testSort(insertionSorter, latitudesArray, 0);
+             */
 
-            // TODO: Merge sort
+            /* TODO: Merge sort
+            System.out.println("MERGE SORT");
+            System.out.println("_______________________________________________________________________");
+             */
 
-            // TODO: Quick sort
+
+            /* Quick sort
+            System.out.println("\n\nQUICK SORT");
+            System.out.println("_______________________________________________________________________");
             QuickSorter quickSorter = new QuickSorter();
             testSort(quickSorter, latitudesArray, 0);
+             */
 
             // Print output from sorting method
 

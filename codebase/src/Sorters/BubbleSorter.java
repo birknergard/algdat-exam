@@ -22,11 +22,11 @@ public class BubbleSorter implements Sorter{
         list[indexB] = temp;
     }
 
-    // Sorting method. flag = 1 for unoptimized, and 0 for optimized
+    // Sorting method. flag = 0 for unoptimized, and 0 for optimized
     public void sort(Double[] list, int flag) {
         int arrayLength = list.length;
         switch(flag){
-            case 0:
+            case 1:
                 boolean swapped;
                 int lastSwapPosition;
                 int end = arrayLength - 1;
@@ -55,10 +55,10 @@ public class BubbleSorter implements Sorter{
                  */
                 break;
 
-            case 1:
+            case 0:
                 for (int i = 0; i < arrayLength - 1; i++) {
                     this.passes++;
-                    for (int j = 0; j < arrayLength - i - 1; j++) {
+                    for (int j = 0; j < arrayLength - 1; j++) {
                         if (list[j] > list[j + 1]) {
                             //Swapping them numbers
                             swap(list, j, j + 1);
