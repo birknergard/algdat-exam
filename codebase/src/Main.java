@@ -15,10 +15,6 @@ public class Main {
         Double[] unsortedArray = list.clone();
 
 
-        /*if(sorter instanceof BubbleSorter){
-            System.out.println("Performing dry run ...");
-            sorter.sort(list.clone(),1);
-        }*/
 
         System.out.printf("Starting sort execution on list of size %d...\n\n", list.length);
         long startTime = System.nanoTime();
@@ -34,6 +30,18 @@ public class Main {
 
         long timeElapsed = System.nanoTime() - startTime;
         System.out.printf("\n ---->> Sort execution time: %.2f ms\n", (timeSorting * Math.pow(10,-6)));
+
+        // Extra logging based on sorting algorithm
+        if(sorter instanceof BubbleSorter){
+
+        } else if(sorter instanceof InsertionSorter){
+
+        } else if(sorter instanceof MergeSorter){
+
+        } else if(sorter instanceof QuickSorter){
+
+        }
+
         //System.out.printf("Time elapsed since execution start: %.2f ms\n", (timeElapsed * Math.pow(10,-6)));
         return wasSorted;
     }
