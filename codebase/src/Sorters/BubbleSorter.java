@@ -3,78 +3,85 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class BubbleSorter {
-
+public class BubbleSorter implements Sorter{
     //Data fields
+    int swaps = 0;
+    int passes = 0;
+    int operations = 0;
 
+    public BubbleSorter(){
+        swaps = 0;
+        passes = 0;
+        operations = 0;
+    }
 
-    //Swap function, copied from QuickSort
-    private static void swap(Double[] list, int indexA, int indexB){
+    //Swap function, copied from QuickSorter
+    private void swap(Double[] list, int indexA, int indexB){
         double temp = list[indexA];
         list[indexA] = list[indexB];
         list[indexB] = temp;
     }
 
-    //Double Array Implemented
-    public static void sort(Double[] list) {
+    // Sorting method. flag = 1 for unoptimized, and 0 for optimized
+    public void sort(Double[] list, int flag) {
         int arrayLength = list.length;
-        int swaps = 0;
-        int passes = 0;
 
-        //Sorting
-        for (int i = 0; i < arrayLength - 1; i++) {
-            passes++;
-            for (int j = 0; j < arrayLength - i - 1; j++) {
-                if (list[j] > list[j + 1]) {
-                    //Swapping them numbers
-                    swap(list, j, j + 1);
-                    swaps++;
+        switch(flag){
+            case 0:
+                boolean swapped;
+                int lastSwapPosition;
+                int end = arrayLength - 1;
+
+                do {
+                    swapped = false;
+                    lastSwapPosition = 0;
+                    this.passes++;
+                    for (int j = 0; j < end; j++) {
+                        if (list[j] > list[j + 1]) {
+                            swap(list, j, j + 1);
+                            swapped = true;
+                            this.swaps++;
+                            lastSwapPosition = j;
+                        }
+                    }
+                    end = lastSwapPosition;
+                } while (swapped);
+
+                //System.out.println("Sorted list using an optimised Bubble Sort: ");
+                for (double num : list) {
+                    System.out.print(num + ", ");
                 }
-            }
+                //System.out.println("\nNumber of swaps: " + swaps);
+                //System.out.println("Number of passes: " + passes + "\n");
+                break;
+
+            case 1:
+                //Sorting
+                for (int i = 0; i < arrayLength - 1; i++) {
+                    this.passes++;
+                    for (int j = 0; j < arrayLength - i - 1; j++) {
+                        if (list[j] > list[j + 1]) {
+                            //Swapping them numbers
+                            swap(list, j, j + 1);
+                            this.swaps++;
+                        }
+                    }
+                }
+                System.out.println("Sorted list using a non-optimised Bubble Sort: ");
+                for (double num : list) {
+                    System.out.print(num + ", ");
+                }
+                System.out.println("\nNumber of swaps: " + swaps);
+                System.out.println("Number of passes: " + passes + "\n");
+                break;
+            default:
+                System.out.println("Invalid flag. Needs to be either 0 (optimized) or 1 (unoptimized).");
         }
-        System.out.println("Sorted list using a non-optimised Bubble Sort: ");
-        for (double num : list) {
-            System.out.print(num + ", ");
-        }
-        System.out.println("\nNumber of swaps: " + swaps);
-        System.out.println("Number of passes: " + passes + "\n");
     }
 
 
-    public static void optimisedSort(Double[] list) {
-        int arrayLength = list.length;
-        boolean swapped;
-        int swaps = 0;
-        int passes = 0;
-        int lastSwapPosition;
-        int end = arrayLength - 1;
-
-        do {
-            swapped = false;
-            lastSwapPosition = 0;
-            passes++;
-            for (int j = 0; j < end; j++) {
-                if (list[j] > list[j + 1]) {
-                    swap(list, j, j + 1);
-                    swapped = true;
-                    swaps++;
-                    lastSwapPosition = j;
-                }
-            }
-            end = lastSwapPosition;
-        } while (swapped);
-
-        System.out.println("Sorted list using an optimised Bubble Sort: ");
-        for (double num : list) {
-            System.out.print(num + ", ");
-        }
-        System.out.println("\nNumber of swaps: " + swaps);
-        System.out.println("Number of passes: " + passes + "\n");
-    }
-
-
-    public static void main(String[] args) {
-
+    // birk: Method for internal testing
+    public void internalTest() {
         Double[] testList = new Double[10];
         for (int i = 0; i <= 9; i++) {
             testList[i] = (double) (i + 1);
@@ -93,7 +100,7 @@ public class BubbleSorter {
         //Optimised version
         Double[] optimisedList = Arrays.copyOf(testList, testList.length);
         long startOpt = System.nanoTime();
-        optimisedSort(optimisedList);
+        sort(optimisedList, 1);
         long endOpt = System.nanoTime();
         long timeOpt = endOpt - startOpt;
         System.out.println("\nTime taken with an optimised Bubble Sort: ");
@@ -102,7 +109,7 @@ public class BubbleSorter {
         //Non-optimised version
         Double[] nonOptimisedList = Arrays.copyOf(testList, testList.length);
         long startNonOptimised = System.nanoTime();
-        optimisedSort(nonOptimisedList);
+        sort(nonOptimisedList, 0);
         long endNonOptimised = System.nanoTime();
         long timeNoOpt = endNonOptimised - startNonOptimised;
         System.out.println("\nTime taken with non-optimised Bubble Sort: ");
