@@ -25,7 +25,6 @@ public class BubbleSorter implements Sorter{
     // Sorting method. flag = 1 for unoptimized, and 0 for optimized
     public void sort(Double[] list, int flag) {
         int arrayLength = list.length;
-
         switch(flag){
             case 0:
                 boolean swapped;
@@ -47,16 +46,16 @@ public class BubbleSorter implements Sorter{
                     end = lastSwapPosition;
                 } while (swapped);
 
-                //System.out.println("Sorted list using an optimised Bubble Sort: ");
+                /*System.out.println("Sorted list using an optimised Bubble Sort: ");
                 for (double num : list) {
                     System.out.print(num + ", ");
                 }
                 //System.out.println("\nNumber of swaps: " + swaps);
                 //System.out.println("Number of passes: " + passes + "\n");
+                 */
                 break;
 
             case 1:
-                //Sorting
                 for (int i = 0; i < arrayLength - 1; i++) {
                     this.passes++;
                     for (int j = 0; j < arrayLength - i - 1; j++) {
@@ -67,15 +66,17 @@ public class BubbleSorter implements Sorter{
                         }
                     }
                 }
-                System.out.println("Sorted list using a non-optimised Bubble Sort: ");
+                /*System.out.println("Sorted list using a non-optimised Bubble Sort: ");
                 for (double num : list) {
                     System.out.print(num + ", ");
                 }
                 System.out.println("\nNumber of swaps: " + swaps);
                 System.out.println("Number of passes: " + passes + "\n");
+                 */
                 break;
             default:
                 System.out.println("Invalid flag. Needs to be either 0 (optimized) or 1 (unoptimized).");
+                break;
         }
     }
 

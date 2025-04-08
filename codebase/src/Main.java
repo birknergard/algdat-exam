@@ -1,5 +1,7 @@
 import DataHandling.City;
+import Sorters.BubbleSorter;
 import Sorters.InsertionSorter;
+import Sorters.QuickSorter;
 import Sorters.Sorter;
 
 import java.io.FileInputStream;
@@ -10,13 +12,14 @@ import java.util.Scanner;
 
 public class Main {
     // Method used for running sorting algorithms. Includes printing of messages and tracks time.
-    public static boolean testSort(Sorter sorter, Double[] list, int maxOperations){
-        int operations = 0;
+    public static boolean testSort(Sorter sorter, Double[] list, int flag){
         boolean wasSorted;
+        System.out.printf("Creating copy of array to sort %d...\n\n", list.length);
+        Double[] unsortedArray = list.clone();
 
         System.out.printf("Starting sort execution on list of size %d...\n\n", list.length);
         long startTime = System.nanoTime();
-        sorter.sort(list, 0);
+        sorter.sort(unsortedArray, flag);
         long timeSorting = System.nanoTime() - startTime;
         System.out.println("Sorting algorithm complete! Verifying...");
 
@@ -27,7 +30,6 @@ public class Main {
 
         long timeElapsed = System.nanoTime() - startTime;
         System.out.printf("\nTime for sorting: %.2f ms\n", (timeSorting * Math.pow(10,-6)));
-        System.out.printf("\nNumber of operations: %d\n", operations);
         System.out.printf("Time elapsed since execution start: %.2f ms\n", (timeElapsed * Math.pow(10,-6)));
         return wasSorted;
     }
@@ -74,14 +76,18 @@ public class Main {
             Double[] latitudesArray = latitudes.toArray(new Double[0]);
 
             // TODO: Bubble sort
+            BubbleSorter bubbleSorter = new BubbleSorter();
+            testSort(bubbleSorter, latitudesArray, 0);
 
             // TODO: Insertion sort testing
             InsertionSorter insertionSorter = new InsertionSorter();
-            testSort(new InsertionSorter(), latitudesArray, 5_000_000);
+            testSort(insertionSorter, latitudesArray, 0);
 
             // TODO: Merge sort
 
             // TODO: Quick sort
+            QuickSorter quickSorter = new QuickSorter();
+            testSort(quickSorter, latitudesArray, 0);
 
             // Print output from sorting method
 
