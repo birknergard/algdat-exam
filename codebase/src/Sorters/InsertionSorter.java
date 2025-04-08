@@ -8,7 +8,7 @@ public class InsertionSorter implements Sorter{
         operations = 0;
     }
 
-    public int sort(Double[] list){
+    public void sort(Double[] list){
         int listLength = list.length;
         double unsortedElement;
 
@@ -39,7 +39,6 @@ public class InsertionSorter implements Sorter{
         }
 
         operations += 8;
-        return 0;
     }
 
     /* For internal testing
