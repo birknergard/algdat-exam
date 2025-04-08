@@ -5,15 +5,17 @@ import java.util.List;
 
 public class MergeSorter implements Sorter{
     //Data fields
-    int partitions;
-    int operations;
+    int logMerges;
+    int logOperations;
 
     public MergeSorter(){
-       partitions = 0;
-       operations = 0;
+       this.logMerges = 0;
+       this.logOperations = 0;
     }
 
     public void sort(Double[] list, int flag) {
+        this.logMerges = 0;
+
         int listLength = list.length;
         if (listLength < 2) {
             return;
@@ -41,6 +43,7 @@ public class MergeSorter implements Sorter{
 
     //Merge function to combine sorted halves
     private void merge(Double[] list, Double[] leftHalf, Double[] rightHalf) {
+        logMerges++;
         int i = 0, j = 0, k = 0;
         int leftSize = leftHalf.length;
         int rightSize = rightHalf.length;

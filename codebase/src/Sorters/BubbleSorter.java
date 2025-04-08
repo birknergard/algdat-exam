@@ -5,14 +5,14 @@ import java.util.List;
 
 public class BubbleSorter implements Sorter{
     //Data fields
-    int swaps = 0;
-    int passes = 0;
-    int operations = 0;
+    int logSwaps = 0;
+    int logPasses = 0;
+    int logOperations = 0;
 
     public BubbleSorter(){
-        swaps = 0;
-        passes = 0;
-        operations = 0;
+        this.logSwaps = 0;
+        this.logPasses = 0;
+        this.logOperations = 0;
     }
 
     //Swap function, copied from QuickSorter
@@ -24,6 +24,10 @@ public class BubbleSorter implements Sorter{
 
     // Sorting method. flag = 0 for unoptimized, and 0 for optimized
     public void sort(Double[] list, int flag) {
+        this.logPasses = 0;
+        this.logSwaps = 0;
+        this.logOperations = 0;
+
         int arrayLength = list.length;
         switch(flag){
             case 1:
@@ -34,12 +38,12 @@ public class BubbleSorter implements Sorter{
                 do {
                     swapped = false;
                     lastSwapPosition = 0;
-                    this.passes++;
+                    this.logPasses++;
                     for (int j = 0; j < end; j++) {
                         if (list[j] > list[j + 1]) {
                             swap(list, j, j + 1);
                             swapped = true;
-                            this.swaps++;
+                            this.logSwaps++;
                             lastSwapPosition = j;
                         }
                     }
@@ -49,13 +53,13 @@ public class BubbleSorter implements Sorter{
 
             case 0:
                 for (int i = 0; i < arrayLength - 1; i++) {
-                    this.passes++;
+                    this.logPasses++;
                     for (int j = 0; j < arrayLength - 1; j++) {
                         if (list[j] > list[j + 1]) {
 
                             // swapping
                             swap(list, j, j + 1);
-                            this.swaps++;
+                            this.logSwaps++;
                         }
                     }
                 }

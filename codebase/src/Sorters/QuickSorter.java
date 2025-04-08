@@ -4,12 +4,14 @@ import java.util.Collections;
 import java.util.LinkedList;
 
 public class QuickSorter implements Sorter{
-    int partitions;
-    int operations;
+    int logPartitions;
+    int logComparisons;
+    int logOperations;
 
     public QuickSorter(){
-       partitions = 0;
-       operations = 0;
+       logPartitions = 0;
+       logOperations = 0;
+       logComparisons = 0;
     }
 
     // 3 operations
@@ -20,7 +22,7 @@ public class QuickSorter implements Sorter{
     }
 
     private int partitionHoare(Double[] list, int lowerBoundaryIndex, int higherBoundaryIndex, boolean withRandomIndex){
-        partitions++;
+        logPartitions++;
         double pivot;
         if(withRandomIndex) {
             // with random pivot(index), it can not be first or last element
@@ -36,14 +38,17 @@ public class QuickSorter implements Sorter{
 
         while(true){
             do{
+                logComparisons++;
                 left++;
             } while(list[left] < pivot);
 
             do {
+                logComparisons++;
                 right--;
             } while(list[right] > pivot);
 
             if(left >= right){
+                logComparisons++;
                 return right;
             }
 
@@ -53,13 +58,14 @@ public class QuickSorter implements Sorter{
 
     // Lomuto partitioning
     private int partitionLom(Double[] list, int lowerBoundaryIndex, int higherBoundaryIndex){
-        partitions++;
+        logPartitions++;
         double pivotValue = list[higherBoundaryIndex];
         //System.out.printf("Pivot for partition: %.2f\n", pivotValue);
 
         //System.out.printf("PivotValue: %.2f\n", pivotValue);
         int iteratorI = lowerBoundaryIndex;
         for(int iteratorJ = lowerBoundaryIndex ; iteratorJ <= higherBoundaryIndex - 1; iteratorJ++){
+            logComparisons++;
             if(list[iteratorJ] <= pivotValue){
                 swap(list, iteratorJ, iteratorI);
                 iteratorI++;
