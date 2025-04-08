@@ -9,12 +9,12 @@ import java.util.Scanner;
 
 public class Main {
     // Method used for running sorting algorithms. Includes printing of messages and tracks time.
-    public boolean testSort(Sorter sorter, LinkedList<Double> list, int maxOperations){
+    public static boolean testSort(Sorter sorter, Double[] list, int maxOperations){
         int operations = 0;
         long startTime = System.nanoTime();
         boolean wasSorted;
 
-        System.out.printf("Starting sort execution on list of size %d...\n", list.size());
+        System.out.printf("Starting sort execution on list of size %d...\n", list.length);
         sorter.sort(list);
         System.out.println("Sorting algorithm complete! Verifying...\n");
 
@@ -28,12 +28,12 @@ public class Main {
         return wasSorted;
     }
 
-    private static boolean isSorted(LinkedList<Double> list){
+    private static boolean isSorted(Double[] list){
         // omits first index size we are comparing two adjacent elements at a time,
         // in order to prevent out of bounds exception
-        for(int i = 1; i < list.size(); i++){
+        for(int i = 1; i < list.length; i++){
             // Returns false if unordered elements are found
-            if(list.get(i-1) > list.get(i)) return false;
+            if(list[i-1] > list[i]) return false;
         }
 
         // If loop completed the list has to be sorted
@@ -70,7 +70,8 @@ public class Main {
 
             // TODO: Bubble sort
 
-            // TODO: Insertion sort
+            // TODO: Insertion sort testing
+
 
             // TODO: Merge sort
 
