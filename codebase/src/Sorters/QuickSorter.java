@@ -1,5 +1,8 @@
 package Sorters;
 
+import java.util.Collections;
+import java.util.LinkedList;
+
 public class QuickSorter implements Sorter{
     int partitions;
     int operations;
@@ -52,7 +55,7 @@ public class QuickSorter implements Sorter{
     private int partitionLom(Double[] list, int lowerBoundaryIndex, int higherBoundaryIndex){
         partitions++;
         double pivotValue = list[higherBoundaryIndex];
-        System.out.printf("Pivot for partition: %.2f\n", pivotValue);
+        //System.out.printf("Pivot for partition: %.2f\n", pivotValue);
 
         //System.out.printf("PivotValue: %.2f\n", pivotValue);
         int iteratorI = lowerBoundaryIndex;
@@ -79,7 +82,7 @@ public class QuickSorter implements Sorter{
             // Lomuto, pivot is last element
             case 0:
                 newPivotIndex = partitionLom(list, lowerBoundaryIndex, higherBoundaryIndex);
-                System.out.printf("Index of new pivot: %d\n", newPivotIndex);
+                //System.out.printf("Index of new pivot: %d\n", newPivotIndex);
                 quickSortRec(list, lowerBoundaryIndex, newPivotIndex - 1, 0);
                 quickSortRec(list, newPivotIndex + 1, higherBoundaryIndex, 0);
                 break;
@@ -108,8 +111,8 @@ public class QuickSorter implements Sorter{
         quickSortRec(list, 0, list.length - 1, flag);
     }
 
-    /*
-    public static void main(String[] args) {
+    // For internal testing
+    public void internalTest() {
         LinkedList<Double> testList = new LinkedList<>();
         // Generate a large randomized list for testing
         for(int i = 0; i < 100; i++){
@@ -131,10 +134,8 @@ public class QuickSorter implements Sorter{
         System.out.print("Before sort: ");
         //System.out.println(testList);
 
-        int iterations = sort(array);
+        sort(array, 0);
         System.out.print("After sort: ");
         //System.out.println(Arrays.toString(array));
-        System.out.printf("Iteration count: %d\n", iterations);
     }
-       */
 }
