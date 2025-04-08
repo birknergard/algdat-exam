@@ -26,21 +26,21 @@
 
 # Useful git commands
 
-For creating commits:
+## For creating commits
     git add -A
     git commit -m "your commit message"
 
-For pushing changes to repository:
+## For pushing changes to repository
     git push origin <branch_name>
 
-For pulling new changes from repository:
+## For pulling new changes from repository
     git pull origin <branch_name>
     --> for rebase add --rebase
     
-For switching branch:
+## For switching branch
     git checkout <branch_name>
 
-For rebasing branch:
+## For rebasing branch
     git checkout main
     git pull origin main
     git checkout <your_branch>
