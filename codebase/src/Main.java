@@ -37,9 +37,26 @@ public class Main {
             times.add(timeSorting);
         }
 
-        long timeAverage = (times.stream().mapToLong(a -> a).sum()) / 10;
+        long timeBest = times.getFirst();
+        long timeWorst = times.getFirst();
+        long timeAverage = times.getFirst();
+        for(int i = 1; i < times.size(); i++){
+            if(times.get(i) < timeBest){
+               timeBest = times.get(i);
+            }
+            if(times.get(i) > timeWorst){
+                timeWorst = times.get(i);
+            }
+            timeAverage += times.get(i);
+        }
 
-        System.out.printf("\n -> Average sort execution time: %.2f ms (%.4f s)\n", (timeAverage * Math.pow(10, -6)), timeAverage * Math.pow(10, -9));
+        timeAverage = timeAverage / times.size();
+        long difference = timeWorst - timeBest;
+
+        System.out.printf("\n -> Average sort execution time: %.2f ms (%.4f s)", (timeAverage * Math.pow(10, -6)), timeAverage * Math.pow(10, -9));
+        System.out.printf("\n -> Best sort: %.2f ms (%.4f s)", (timeBest * Math.pow(10, -6)), timeBest * Math.pow(10, -9));
+        System.out.printf("\n -> Worst sort: %.2f ms (%.4f s)", (timeWorst * Math.pow(10, -6)), timeWorst * Math.pow(10, -9));
+        System.out.printf("\n -> Difference: %.2f ms (%.4f s)\n", (difference * Math.pow(10, -6)), difference * Math.pow(10, -9));
 
         // Extra logging based on sorting algorithm
         if(sorter instanceof BubbleSorter){
