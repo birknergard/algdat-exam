@@ -3,8 +3,8 @@ import Sorters.*;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.Scanner;
 
 public class Main {
@@ -65,7 +65,7 @@ public class Main {
     // Main method where algorithms are executed, and data is handled
     public static void main(String[] args) {
         // Data structure to hold data
-        LinkedList<Double> latitudes = new LinkedList<>();
+        ArrayList<Double> latitudes = new ArrayList<>();
 
         // Handle data import
         try{
@@ -86,8 +86,9 @@ public class Main {
             }
                //System.out.println(latitudes);
 
-            // Randomize order of list so its unsorted
-            //Collections.shuffle(latitudes);
+            // ________________ FOR RANDOMIZING LIST ORDER ____________________
+            //  Collections.shuffle(latitudes);
+
             // Convert datastructure (LinkedList) to static array (Double[]) for use in sorting methods
             Double[] latitudesArray = latitudes.toArray(new Double[0]);
 
