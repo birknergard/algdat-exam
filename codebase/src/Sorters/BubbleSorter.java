@@ -27,6 +27,12 @@ public class BubbleSorter implements Sorter{
         return this.logSwaps;
     }
 
+    public void reset(){
+        this.logPasses = 0;
+        this.logSwaps = 0;
+        this.logOperations = 0;
+    }
+
     //Swap function, copied from QuickSorter
     private void swap(Double[] list, int indexA, int indexB){
         double temp = list[indexA];
@@ -36,10 +42,6 @@ public class BubbleSorter implements Sorter{
 
     // Sorting method. flag = 0 for unoptimized, and 0 for optimized
     public void sort(Double[] list, int flag) {
-        this.logPasses = 0;
-        this.logSwaps = 0;
-        this.logOperations = 0;
-
         int arrayLength = list.length;
         switch(flag){
             case 1:

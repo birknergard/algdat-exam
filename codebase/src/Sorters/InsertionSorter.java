@@ -12,9 +12,11 @@ public class InsertionSorter implements Sorter{
         return logOperations;
     }
 
-    public void sort(Double[] list, int flag){
+    public void reset(){
         this.logOperations = 0;
+    }
 
+    public void sort(Double[] list, int flag){
         int listLength = list.length;
         double unsortedElement;
 

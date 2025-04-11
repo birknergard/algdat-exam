@@ -17,6 +17,11 @@ public class MergeSorter implements Sorter{
         return this.logOperations;
     }
 
+    public void reset(){
+        this.logMerges = 0;
+        this.logOperations = 0;
+    }
+
     public int getMerges() {
         return this.logMerges;
     }
