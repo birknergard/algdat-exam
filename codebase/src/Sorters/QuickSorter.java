@@ -78,9 +78,7 @@ public class QuickSorter implements Sorter{
     private int partitionLom(Double[] list, int lowerBoundaryIndex, int higherBoundaryIndex){
         logPartitions++;
         double pivotValue = list[higherBoundaryIndex];
-        //System.out.printf("Pivot for partition: %.2f\n", pivotValue);
 
-        //System.out.printf("PivotValue: %.2f\n", pivotValue);
         int iteratorI = lowerBoundaryIndex;
         for(int iteratorJ = lowerBoundaryIndex ; iteratorJ <= higherBoundaryIndex - 1; iteratorJ++){
             logComparisons++;
@@ -90,7 +88,6 @@ public class QuickSorter implements Sorter{
             }
         }
         swap(list, iteratorI, higherBoundaryIndex);
-        //System.out.println("Current List:" + list);
 
         // Returns the new pivot index
         return iteratorI;
@@ -125,6 +122,7 @@ public class QuickSorter implements Sorter{
                 quickSortRec(list, newPivotIndex + 1, higherBoundaryIndex, 1);
                 break;
 
+            // Logging for misuse
             default:
                 System.out.println("Incorrect sort flag for quicksort.");
                 break;
@@ -132,7 +130,7 @@ public class QuickSorter implements Sorter{
     }
 
     public void sort(Double[] list, int flag){
-        // only run if list is big enough
+        // Only runs if list is big enough
         if(list.length > 2){
             quickSortRec(list, 0, list.length - 1, flag);
         }
