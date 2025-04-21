@@ -53,7 +53,7 @@ public class Main {
 
     public static boolean testSort(Sorter sorter, ArrayList<Double> list, int flag){
         ArrayList<Long> times = new ArrayList<>();
-        int sorts = 50;
+        int sorts = 1000;
         boolean wasSorted;
 
         System.out.printf("TESTING SORT %d times ...\n", sorts);
@@ -99,18 +99,18 @@ public class Main {
 
         // Extra logging based on sorting algorithm
         if(sorter instanceof BubbleSorter){
-            System.out.printf("------> Average passes: %10d \n", ((BubbleSorter) sorter).getPasses() / 10);
-            System.out.printf("------> Average swaps:  %10d \n", ((BubbleSorter) sorter).getSwaps() / 10);
+            System.out.printf("------> Average passes: %10d \n", ((BubbleSorter) sorter).getPasses() / sorts);
+            System.out.printf("------> Average swaps:  %10d \n", ((BubbleSorter) sorter).getSwaps() / sorts);
 
         } else if(sorter instanceof InsertionSorter){
-            System.out.printf("------> Average operations: %10d \n", ((InsertionSorter) sorter).getOperations() / 10);
+            System.out.printf("------> Average operations: %10d \n", ((InsertionSorter) sorter).getOperations() / sorts);
 
         } else if(sorter instanceof MergeSorter){
-            System.out.printf("------> Average merges: %10d \n", ((MergeSorter) sorter).getMerges() / 10);
+            System.out.printf("------> Average merges: %10d \n", ((MergeSorter) sorter).getMerges() / sorts);
 
         } else if(sorter instanceof QuickSorter){
-            System.out.printf("    --> Average comparisons: %10d \n", ((QuickSorter) sorter).getComparisons() / 10);
-            System.out.printf("    --> Average partitions:  %10d \n", ((QuickSorter) sorter).getPartitions() / 10);
+            System.out.printf("    --> Average comparisons: %10d \n", ((QuickSorter) sorter).getComparisons() / sorts);
+            System.out.printf("    --> Average partitions:  %10d \n", ((QuickSorter) sorter).getPartitions() / sorts);
         }
 
         // Resets the counters on the sorter

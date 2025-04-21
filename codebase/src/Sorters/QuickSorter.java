@@ -43,40 +43,52 @@ public class QuickSorter implements Sorter{
     private int partitionHoare(Double[] list, int lowerBoundaryIndex, int higherBoundaryIndex, boolean withRandomPivot){
         logPartitions++;
         double pivot;
+
+        // If we select to use random pivot (task c)
         if(withRandomPivot){
                 // with random pivot(index), it can not be first or last element
                 int pivotIndex = (int) (Math.random() * (higherBoundaryIndex - lowerBoundaryIndex)) + lowerBoundaryIndex;
                 pivot = list[pivotIndex];
         } else {
+            // Else we use the first element in the subarray
             pivot = list[lowerBoundaryIndex];
         }
 
+        /* Starts one index out of bounds to prevent ignoring of elements in
+           this particular implementation */
         int left = lowerBoundaryIndex - 1;
         int right = higherBoundaryIndex + 1;
 
+        // Finds two elements which are on the wrong side of the pivot and swaps them to the correct side
         while(true){
+            // Finds elements larger than the pivot on the left side
             do{
                 logComparisons++;
                 left++;
             } while(list[left] < pivot);
 
+            // And elements smaller than the pivot on the right side
             do {
                 logComparisons++;
                 right--;
             } while(list[right] > pivot);
 
+            // Ends loop if every element has been checked
             if(left >= right){
                 logComparisons++;
                 return right;
             }
 
+            // Swaps the elements to the correct side
             swap(list, left, right);
         }
     }
 
     // Lomuto partitioning
     private int partitionLom(Double[] list, int lowerBoundaryIndex, int higherBoundaryIndex){
+        // For logging
         logPartitions++;
+
         double pivotValue = list[higherBoundaryIndex];
 
         int iteratorI = lowerBoundaryIndex;
@@ -95,7 +107,7 @@ public class QuickSorter implements Sorter{
 
     private void quickSortRec(Double[] list, int lowerBoundaryIndex, int higherBoundaryIndex, int partitionMethod){
         // TODO: breakpoint
-        if(lowerBoundaryIndex >= higherBoundaryIndex || lowerBoundaryIndex < 0 ){
+        if(lowerBoundaryIndex >= higherBoundaryIndex || lowerBoundaryIndex < 0){
             return;
         }
         int newPivotIndex;
