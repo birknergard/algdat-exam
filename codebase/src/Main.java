@@ -10,17 +10,56 @@ import java.util.Scanner;
 
 public class Main {
     // Method used for running sorting algorithms. Includes printing of messages and tracks time.
-    public static boolean testSort(Sorter sorter, ArrayList<Double> list, int flag){
-        ArrayList<Long> times = new ArrayList<>();
+    public static boolean testSortSingle(Sorter sorter, ArrayList<Double> list, int flag){
         ArrayList<Double> clonedArray = (ArrayList<Double>) list.clone();
         boolean wasSorted;
+        Double[] unsortedArray = clonedArray.toArray(new Double[0]);
+        long startTime = System.nanoTime();
+        sorter.sort(unsortedArray, flag);
+        long timeSorting = System.nanoTime() - startTime;
 
-        for(int i = 0; i < 10; i++){
-            //System.out.println("Creating copy of array to sort ...");
+        //System.out.println("Sorting algorithm complete! Verifying...");
 
-            Double[] unsortedArray = clonedArray.toArray(new Double[0]);
+        wasSorted = isSorted(unsortedArray);
 
-            System.out.printf("%d: TESTING SORT ...\n", i + 1);
+        if(!wasSorted) {
+            System.out.println("Sorting algorithm failed in sorting list! Cancelling test.");
+            return false;
+        }
+
+        System.out.printf("\n -> Sort execution time: %.2f ms (%.4f s)\n", (timeSorting * Math.pow(10, -6)), timeSorting * Math.pow(10, -9));
+
+        // Extra logging based on sorting algorithm
+        if(sorter instanceof BubbleSorter){
+            System.out.printf("------> passes: %10d \n", ((BubbleSorter) sorter).getPasses());
+            System.out.printf("------> swaps:  %10d \n", ((BubbleSorter) sorter).getSwaps());
+
+        } else if(sorter instanceof InsertionSorter){
+            System.out.printf("------> operations: %10d \n", ((InsertionSorter) sorter).getOperations());
+
+        } else if(sorter instanceof MergeSorter){
+            System.out.printf("------> merges: %10d \n", ((MergeSorter) sorter).getMerges());
+
+        } else if(sorter instanceof QuickSorter){
+            System.out.printf("    --> comparisons: %10d \n", ((QuickSorter) sorter).getComparisons());
+            System.out.printf("    --> partitions:  %10d \n", ((QuickSorter) sorter).getPartitions());
+        }
+
+        // Resets the counters on the sorter
+        sorter.reset();
+
+        return true;
+    }
+
+    public static boolean testSort(Sorter sorter, ArrayList<Double> list, int flag){
+        ArrayList<Long> times = new ArrayList<>();
+        int sorts = 50;
+        boolean wasSorted;
+
+        System.out.printf("TESTING SORT %d times ...\n", sorts);
+        for(int i = 0; i < sorts; i++){
+            Double[] unsortedArray = ((ArrayList<Double>) list.clone()).toArray(new Double[0]);
+
             long startTime = System.nanoTime();
             sorter.sort(unsortedArray, flag);
             long timeSorting = System.nanoTime() - startTime;
@@ -119,37 +158,38 @@ public class Main {
             // ________________ FOR RANDOMIZING LIST ORDER ____________________
             //  Collections.shuffle(latitudes);
 
-            // Bubble sort
+            /* Bubble sort
             System.out.println("\n\nREGULAR BUBBLE SORT");
             System.out.println("_______________________________________________________________________");
             BubbleSorter bubbleSorter = new BubbleSorter();
 
-            // Dry run
+            / Dry run
             bubbleSorter.sort(latitudes.toArray(new Double[0]).clone(), 0);
 
-            // Running regular bubble sort
+            / Running regular bubble sort
             testSort(bubbleSorter, latitudes, 0);
 
             System.out.println("\n\nOPTIMIZED BUBBLE SORT");
             System.out.println("_______________________________________________________________________");
             testSort(bubbleSorter, latitudes, 1);
 
-            // Insertion sort testing
+            / Insertion sort testing
             System.out.println("\n\nINSERTION SORT");
             System.out.println("_______________________________________________________________________");
             InsertionSorter insertionSorter = new InsertionSorter();
             testSort(insertionSorter, latitudes, 0);
 
-            // Merge sort
+            / Merge sort
             System.out.println("\n\nMERGE SORT");
             System.out.println("_______________________________________________________________________");
             MergeSorter mergeSorter = new MergeSorter();
             testSort(mergeSorter, latitudes, 0);
-
+            */
             // Quick sort
+            QuickSorter quickSorter = new QuickSorter();
+
             System.out.println("\n\nQUICK SORT WITH PIVOT LAST (Lomuto)");
             System.out.println("_______________________________________________________________________");
-            QuickSorter quickSorter = new QuickSorter();
             testSort(quickSorter, latitudes, 0);
 
             System.out.println("\n\nQUICK SORT WITH PIVOT FIRST (Hoare)");

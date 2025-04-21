@@ -39,18 +39,18 @@ public class QuickSorter implements Sorter{
         list[indexB] = temp;
     }
 
-    private int partitionHoare(Double[] list, int lowerBoundaryIndex, int higherBoundaryIndex, boolean withRandomIndex){
+    // Use boolean to choose whether or not to use a random pivot
+    private int partitionHoare(Double[] list, int lowerBoundaryIndex, int higherBoundaryIndex, boolean withRandomPivot){
         logPartitions++;
         double pivot;
-        if(withRandomIndex) {
-            // with random pivot(index), it can not be first or last element
-            int pivotIndex = (int) Math.floor(Math.random() * list.length - 1) + 1;
-            pivot = list[pivotIndex];
-
+        if(withRandomPivot){
+                // with random pivot(index), it can not be first or last element
+                int pivotIndex = (int) (Math.random() * (list.length - 1)) + 1;
+                pivot = list[pivotIndex];
         } else {
-            // Sets pivot as low
             pivot = list[lowerBoundaryIndex];
         }
+
         int left = lowerBoundaryIndex - 1;
         int right = higherBoundaryIndex + 1;
 
@@ -132,7 +132,10 @@ public class QuickSorter implements Sorter{
     }
 
     public void sort(Double[] list, int flag){
-        quickSortRec(list, 0, list.length - 1, flag);
+        // only run if list is big enough
+        if(list.length > 2){
+            quickSortRec(list, 0, list.length - 1, flag);
+        }
     }
 
     // For internal testing
