@@ -39,18 +39,18 @@ public class QuickSorter implements Sorter{
         list[indexB] = temp;
     }
 
-    // Use boolean to choose whether or not to use a random pivot
-    private int partitionHoare(Double[] list, int lowerBoundaryIndex, int higherBoundaryIndex, boolean withRandomPivot){
+    private int partitionHoare(Double[] list, int lowerBoundaryIndex, int higherBoundaryIndex, boolean withRandomIndex){
         logPartitions++;
         double pivot;
-        if(withRandomPivot){
-                // with random pivot(index), it can not be first or last element
-                int pivotIndex = (int) (Math.random() * (higherBoundaryIndex - lowerBoundaryIndex)) + lowerBoundaryIndex;
-                pivot = list[pivotIndex];
+        if(withRandomIndex) {
+            // with random pivot(index), it can not be first or last element
+            int pivotIndex = (int) Math.floor(Math.random() * list.length - 1) + 1;
+            pivot = list[pivotIndex];
+
         } else {
+            // Sets pivot as low
             pivot = list[lowerBoundaryIndex];
         }
-
         int left = lowerBoundaryIndex - 1;
         int right = higherBoundaryIndex + 1;
 
@@ -78,7 +78,9 @@ public class QuickSorter implements Sorter{
     private int partitionLom(Double[] list, int lowerBoundaryIndex, int higherBoundaryIndex){
         logPartitions++;
         double pivotValue = list[higherBoundaryIndex];
+        //System.out.printf("Pivot for partition: %.2f\n", pivotValue);
 
+        //System.out.printf("PivotValue: %.2f\n", pivotValue);
         int iteratorI = lowerBoundaryIndex;
         for(int iteratorJ = lowerBoundaryIndex ; iteratorJ <= higherBoundaryIndex - 1; iteratorJ++){
             logComparisons++;
@@ -88,6 +90,7 @@ public class QuickSorter implements Sorter{
             }
         }
         swap(list, iteratorI, higherBoundaryIndex);
+        //System.out.println("Current List:" + list);
 
         // Returns the new pivot index
         return iteratorI;
@@ -100,7 +103,7 @@ public class QuickSorter implements Sorter{
         }
         int newPivotIndex;
         switch (partitionMethod){
-            // Task a: Lomuto, pivot is last element
+            // Lomuto, pivot is last element
             case 0:
                 newPivotIndex = partitionLom(list, lowerBoundaryIndex, higherBoundaryIndex);
                 //System.out.printf("Index of new pivot: %d\n", newPivotIndex);
@@ -108,21 +111,20 @@ public class QuickSorter implements Sorter{
                 quickSortRec(list, newPivotIndex + 1, higherBoundaryIndex, 0);
                 break;
 
-            // Task b: Hoare, pivot is first element
+            // Hoare, pivot is first element
             case 1:
                 newPivotIndex = partitionHoare(list, lowerBoundaryIndex, higherBoundaryIndex, false);
                 quickSortRec(list, lowerBoundaryIndex, newPivotIndex, 1);
                 quickSortRec(list, newPivotIndex + 1, higherBoundaryIndex, 1);
                 break;
 
-            // Task c: Hoare, pivot is random
+            // Hoare, first pivot is random(not first or last), then first element for each partition
             case 2:
                 newPivotIndex = partitionHoare(list, lowerBoundaryIndex, higherBoundaryIndex, true);
-                quickSortRec(list, lowerBoundaryIndex, newPivotIndex, 2);
-                quickSortRec(list, newPivotIndex + 1, higherBoundaryIndex, 2);
+                quickSortRec(list, lowerBoundaryIndex, newPivotIndex, 1);
+                quickSortRec(list, newPivotIndex + 1, higherBoundaryIndex, 1);
                 break;
 
-            // Logging for misuse
             default:
                 System.out.println("Incorrect sort flag for quicksort.");
                 break;
@@ -130,10 +132,7 @@ public class QuickSorter implements Sorter{
     }
 
     public void sort(Double[] list, int flag){
-        // Only runs if list is big enough
-        if(list.length > 2){
-            quickSortRec(list, 0, list.length - 1, flag);
-        }
+        quickSortRec(list, 0, list.length - 1, flag);
     }
 
     // For internal testing

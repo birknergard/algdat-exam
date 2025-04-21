@@ -1,7 +1,7 @@
 # Task 2, Insertion Sort:
 
 ## Description
-
+Insertion sort is an algorithm (!!!)
 
 ## PSEUDOCODE 
 ```
@@ -39,28 +39,12 @@
 ```
 
 ## Time and space complexity
-Time complexity should be big O(n^2) exponential time. The average case is also n^2 and the best case is n 
-The algorithm (in the worst case, which is the signifier for big O) will check every element once for every element in the array.
+Time complexity should be big O(n^2) exponential time, given that the algorithm contains a nested loop.  
+Space complexity should be big O(1) constant space, given that we are only storing one element at a time.
 
-## Task B
-The time complexity of this algorithm will change slightly based on the order of the input. 
-The best case for insertionsort is Ω(n), which occurs the the array is already sorted.
-The reason for this being the best case is the the algorithm does not enter its inner loop if no elements are in the wrong order.
-
-The worst case is O(n^2), where the array is in reverse order, which means every element is in the wrong position.
-This means that the algoritm will enter its inner loop for every entry in the array.
-
-The average case is Θ(n^2). In the average case the list will be neither in reverse nor sorted order. With a mix of sorted and unsorted data since the variance here is so large we have to assume that the algorithm is Θ(n^2) regardless of the data.  no way of knowing how much of the data is unsorted, and we ignore variance given its irrelevance when approaching infinity, we determine that the averge case time complexity is Θ(n^2).
-
-Test with the implementation (average of 10 tests):
-Standard order:
- -> Sort execution time: 985.27 ms (0.9853 s)
-------> Operations:  540369286 
-
-Shuffled:
--> Sort execution time: 1033.58 ms (1.0336 s)
-------> Operations:  572161278 
-
+## Optimizations
+I believe the algorithm should be faster when sorting a linked list. Given that we dont have to shift the other elements forward with every insert. Although this is only a marginal optimization.
+        
 ## Sources:
 https://en.wikipedia.org/wiki/Insertion_sort
 

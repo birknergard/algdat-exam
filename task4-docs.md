@@ -72,15 +72,7 @@ FUNC QuickSort(LowerBoundaryIndex, HigherBoundaryIndex, List):
 ENDFUNC
 ```
 ---
-## Task B 
-When sorting 10 different shuffled datasets of the same size the first element as pivot strategy produces the fastest outcome.
-However,  using random element as first pivot results in the smallest difference in time from the slowest to the fastest sort.
-Therefore we can somewhat comfortably say that the random pivot strategy has the best average performance.   
-
-For this given dataset (in its linear order) the results are a bit different.
-
 ## Time and space complexity
-
 
 ## Optimizations  
 The simplest optimization for QuickSort is to randomize the Pivot index.
