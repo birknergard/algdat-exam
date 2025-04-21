@@ -45,7 +45,7 @@ public class QuickSorter implements Sorter{
         double pivot;
         if(withRandomPivot){
                 // with random pivot(index), it can not be first or last element
-                int pivotIndex = (int) (Math.random() * (list.length - 1)) + 1;
+                int pivotIndex = (int) (Math.random() * (higherBoundaryIndex - lowerBoundaryIndex)) + lowerBoundaryIndex;
                 pivot = list[pivotIndex];
         } else {
             pivot = list[lowerBoundaryIndex];
@@ -100,7 +100,7 @@ public class QuickSorter implements Sorter{
         }
         int newPivotIndex;
         switch (partitionMethod){
-            // Lomuto, pivot is last element
+            // Task a: Lomuto, pivot is last element
             case 0:
                 newPivotIndex = partitionLom(list, lowerBoundaryIndex, higherBoundaryIndex);
                 //System.out.printf("Index of new pivot: %d\n", newPivotIndex);
@@ -108,18 +108,18 @@ public class QuickSorter implements Sorter{
                 quickSortRec(list, newPivotIndex + 1, higherBoundaryIndex, 0);
                 break;
 
-            // Hoare, pivot is first element
+            // Task b: Hoare, pivot is first element
             case 1:
                 newPivotIndex = partitionHoare(list, lowerBoundaryIndex, higherBoundaryIndex, false);
                 quickSortRec(list, lowerBoundaryIndex, newPivotIndex, 1);
                 quickSortRec(list, newPivotIndex + 1, higherBoundaryIndex, 1);
                 break;
 
-            // Hoare, first pivot is random(not first or last), then first element for each partition
+            // Task c: Hoare, pivot is random
             case 2:
                 newPivotIndex = partitionHoare(list, lowerBoundaryIndex, higherBoundaryIndex, true);
-                quickSortRec(list, lowerBoundaryIndex, newPivotIndex, 1);
-                quickSortRec(list, newPivotIndex + 1, higherBoundaryIndex, 1);
+                quickSortRec(list, lowerBoundaryIndex, newPivotIndex, 2);
+                quickSortRec(list, newPivotIndex + 1, higherBoundaryIndex, 2);
                 break;
 
             // Logging for misuse
