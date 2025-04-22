@@ -36,7 +36,7 @@ public class City {
         return input.length() >= 2;
     }
 
-    // For now we only have latitude, can write getters for other attributes later.
+    // For now we only have latitude, can write getters for other attributes later if needed.
     public double getLat() {
         return this.lat;
     }

@@ -11,7 +11,7 @@ public class Main {
     // Method used for running sorting algorithms. Includes printing of messages and tracks time.
     public static boolean testSort(Sorter sorter, ArrayList<Double> list, int flag){
         ArrayList<Long> times = new ArrayList<>();
-        int sorts = 100;
+        int sorts = 1;
         boolean wasSorted;
 
         System.out.printf("TESTING SORT %d times ...\n", sorts);

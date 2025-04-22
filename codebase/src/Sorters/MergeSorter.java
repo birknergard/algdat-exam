@@ -7,43 +7,71 @@ import java.util.List;
  * CREATED BY CANDIDATE 119
  * */
 public class MergeSorter implements Sorter{
-    //Data fields
+    // For logging merges
     private int logMerges;
-    private int logOperations;
 
     public MergeSorter(){
        this.logMerges = 0;
-       this.logOperations = 0;
-    }
-
-    public int getOperations() {
-        return this.logOperations;
     }
 
     public void reset(){
         this.logMerges = 0;
-        this.logOperations = 0;
     }
 
     public int getMerges() {
         return this.logMerges;
     }
 
+    // Merge function to combine sorted halves
+    private void merge(Double[] list, Double[] leftHalf, Double[] rightHalf) {
+        logMerges++; // For logging
+
+        // Indexes for leftHalf(i), rightHalf(j), list(k)
+        int i = 0, j = 0, k = 0;
+        int leftSize = leftHalf.length;
+        int rightSize = rightHalf.length;
+
+        // Compare elements from both halves and place smaller one in list
+        while (i < leftSize && j < rightSize) {
+            if (leftHalf[i] <= rightHalf[j]) {
+                list[k++] = leftHalf[i++]; // Take an element from leftHalf
+            } else {
+                list[k++] = rightHalf[j++]; // Take an element from rightHalf
+            }
+        }
+
+        // Copy remaining elements from leftHalf (if any)
+        while (i < leftSize) {
+            list[k++] = leftHalf[i++];
+        }
+
+        // Copy remaining elements from rightHalf (if any)
+        while (j < rightSize) {
+            list[k++] = rightHalf[j++];
+        }
+    }
+
+    // Main sorting method
     public void sort(Double[] list, int flag) {
         int listLength = list.length;
+
+        //If list has fewer than 2 elements, it is already sorted
         if (listLength < 2) {
             return;
         }
 
+        // Find the middle index and split the list into two halves
         int middle = listLength / 2;
-        Double[] leftHalf = new Double[middle];
-        Double[] rightHalf = new Double[listLength - middle];
 
-        for (int i = 0; i < middle; i++) {
+        // Create left sublist
+        Double[] leftHalf = new Double[middle];
+        for(int i = 0; i < middle; i++) {
             leftHalf[i] = list[i];
         }
 
-        for (int i = middle; i < listLength; i++) {
+        // Create right sublist
+        Double[] rightHalf = new Double[listLength - middle];
+        for(int i = middle; i < listLength; i++) {
             rightHalf[i - middle] = list[i];
         }
 
@@ -55,31 +83,7 @@ public class MergeSorter implements Sorter{
         merge(list, leftHalf, rightHalf);
     }
 
-    //Merge function to combine sorted halves
-    private void merge(Double[] list, Double[] leftHalf, Double[] rightHalf) {
-        logMerges++;
-        int i = 0, j = 0, k = 0;
-        int leftSize = leftHalf.length;
-        int rightSize = rightHalf.length;
-
-
-        while (i < leftSize && j < rightSize) {
-            if (leftHalf[i] <= rightHalf[j]) {
-                list[k++] = leftHalf[i++];
-            } else {
-                list[k++] = rightHalf[j++];
-            }
-        }
-
-        while (i < leftSize) {
-            list[k++] = leftHalf[i++];
-        }
-
-        while (j < rightSize) {
-            list[k++] = rightHalf[j++];
-        }
-    }
-
+    // For debugging sorting method
     public void internalTest(String[] args) {
         Double[] testList = new Double[10];
         for (int i = 0; i <= 9; i++) {
