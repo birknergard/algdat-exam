@@ -21,7 +21,7 @@ public class InsertionSorter implements Sorter{
         double unsortedElement;
 
         for(int unsortedElementIndex = 1; unsortedElementIndex < listLength; unsortedElementIndex++){
-            // logOperations++;
+            logOperations++;
             int insertionComparatorElementIndex = unsortedElementIndex - 1;
 
             if(list[unsortedElementIndex] < list[insertionComparatorElementIndex]){
@@ -42,34 +42,11 @@ public class InsertionSorter implements Sorter{
                     insertionComparatorElementIndex--;
                 }
 
+                // Insert the unsorted element at its sorted position in the array
                 list[insertionComparatorElementIndex + 1] = unsortedElement;
             }
         }
-
+        // Logging constant
         logOperations += 8;
     }
-
-    /* For internal testing
-    public static void main(String[] args) {
-        ArrayList<Double> testList = new ArrayList<>();
-        // Generate a large randomized list for testing
-        for(int i = 0; i < 5; i++){
-            testList.add((double) i);
-            //testList.add(Math.floor(Math.random() * 100000) / 100);
-        }
-
-        Collections.shuffle(testList);
-
-        //Double[] array = testList.toArray(new Double[0]);
-        Double[] array = {1.0, 2.0, 3.0 ,5.2 ,6.4, 7.0, 0.0, 1.2, 0.5};
-
-        System.out.print("Before sort: ");
-        System.out.println(Arrays.toString(array));
-
-        int iterations = sort(array);
-        System.out.print("After sort: ");
-        System.out.println(Arrays.toString(array));
-        System.out.printf("Iteration count: %d\n", iterations);
-    }
-     */
 }

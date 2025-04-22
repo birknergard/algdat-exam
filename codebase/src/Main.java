@@ -3,60 +3,19 @@ import Sorters.*;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
 
 public class Main {
     // Method used for running sorting algorithms. Includes printing of messages and tracks time.
-    public static boolean testSortSingle(Sorter sorter, ArrayList<Double> list, int flag){
-        ArrayList<Double> clonedArray = (ArrayList<Double>) list.clone();
-        boolean wasSorted;
-        Double[] unsortedArray = clonedArray.toArray(new Double[0]);
-        long startTime = System.nanoTime();
-        sorter.sort(unsortedArray, flag);
-        long timeSorting = System.nanoTime() - startTime;
-
-        //System.out.println("Sorting algorithm complete! Verifying...");
-
-        wasSorted = isSorted(unsortedArray);
-
-        if(!wasSorted) {
-            System.out.println("Sorting algorithm failed in sorting list! Cancelling test.");
-            return false;
-        }
-
-        System.out.printf("\n -> Sort execution time: %.2f ms (%.4f s)\n", (timeSorting * Math.pow(10, -6)), timeSorting * Math.pow(10, -9));
-
-        // Extra logging based on sorting algorithm
-        if(sorter instanceof BubbleSorter){
-            System.out.printf("------> passes: %10d \n", ((BubbleSorter) sorter).getPasses());
-            System.out.printf("------> swaps:  %10d \n", ((BubbleSorter) sorter).getSwaps());
-
-        } else if(sorter instanceof InsertionSorter){
-            System.out.printf("------> operations: %10d \n", ((InsertionSorter) sorter).getOperations());
-
-        } else if(sorter instanceof MergeSorter){
-            System.out.printf("------> merges: %10d \n", ((MergeSorter) sorter).getMerges());
-
-        } else if(sorter instanceof QuickSorter){
-            System.out.printf("    --> comparisons: %10d \n", ((QuickSorter) sorter).getComparisons());
-            System.out.printf("    --> partitions:  %10d \n", ((QuickSorter) sorter).getPartitions());
-        }
-
-        // Resets the counters on the sorter
-        sorter.reset();
-
-        return true;
-    }
-
     public static boolean testSort(Sorter sorter, ArrayList<Double> list, int flag){
         ArrayList<Long> times = new ArrayList<>();
-        int sorts = 1000;
+        int sorts = 100;
         boolean wasSorted;
 
         System.out.printf("TESTING SORT %d times ...\n", sorts);
+        System.out.printf("DATASET LENGTH: %d elements\n", list.size());
         for(int i = 0; i < sorts; i++){
             Double[] unsortedArray = ((ArrayList<Double>) list.clone()).toArray(new Double[0]);
 
@@ -64,18 +23,20 @@ public class Main {
             sorter.sort(unsortedArray, flag);
             long timeSorting = System.nanoTime() - startTime;
 
-            //System.out.println("Sorting algorithm complete! Verifying...");
-
+            // Verifies the integrity of the current sort
             wasSorted = isSorted(unsortedArray);
 
+            // If list is not sorted after sort the method exits with error
             if(!wasSorted) {
                 System.out.println("Sorting algorithm failed in sorting list! Cancelling test.");
                 return false;
             }
 
+            // Adds time taken to array for later parsing
             times.add(timeSorting);
         }
 
+        // Parsing various time statistics
         long timeBest = times.getFirst();
         long timeWorst = times.getFirst();
         long timeAverage = times.getFirst();
@@ -88,16 +49,16 @@ public class Main {
             }
             timeAverage += times.get(i);
         }
-
         timeAverage = timeAverage / times.size();
         long difference = timeWorst - timeBest;
 
+        // Test output
         System.out.printf("\n -> Average sort execution time: %.2f ms (%.4f s)", (timeAverage * Math.pow(10, -6)), timeAverage * Math.pow(10, -9));
         System.out.printf("\n -> Best sort: %.2f ms (%.4f s)", (timeBest * Math.pow(10, -6)), timeBest * Math.pow(10, -9));
         System.out.printf("\n -> Worst sort: %.2f ms (%.4f s)", (timeWorst * Math.pow(10, -6)), timeWorst * Math.pow(10, -9));
         System.out.printf("\n -> Difference: %.2f ms (%.4f s)\n", (difference * Math.pow(10, -6)), difference * Math.pow(10, -9));
 
-        // Extra logging based on sorting algorithm
+        // Extra output based on specific sorter class
         if(sorter instanceof BubbleSorter){
             System.out.printf("------> Average passes: %10d \n", ((BubbleSorter) sorter).getPasses() / sorts);
             System.out.printf("------> Average swaps:  %10d \n", ((BubbleSorter) sorter).getSwaps() / sorts);
@@ -119,6 +80,7 @@ public class Main {
         return true;
     }
 
+    // Method used to verify whether a list is sorted or not. Way faster than manual checking on the larger dataset.
     private static boolean isSorted(Double[] list){
         // omits first index size we are comparing two adjacent elements at a time,
         // in order to prevent out of bounds exception
@@ -131,7 +93,7 @@ public class Main {
         return true;
     }
 
-    // Main method where algorithms are executed, and data is handled
+    // Main method data is parsed and sorting algorithms are executed
     public static void main(String[] args) {
         // Data structure to hold data
         ArrayList<Double> latitudes = new ArrayList<>();
@@ -155,37 +117,38 @@ public class Main {
             }
                //System.out.println(latitudes);
 
-            // ________________ FOR RANDOMIZING LIST ORDER ____________________
-            //  Collections.shuffle(latitudes);
+            /* ______________________________________TESTING INFRASTRUCTURE______________________________________ */
+            //  For randomizing list order, comment/uncomment to use
+            Collections.shuffle(latitudes);
 
-            /* Bubble sort
-            System.out.println("\n\nREGULAR BUBBLE SORT");
+            // BUBBLE SORT TESTING
+            System.out.println("\n\nREGULAR BUBBLE SORT (SHUFFLED)");
             System.out.println("_______________________________________________________________________");
             BubbleSorter bubbleSorter = new BubbleSorter();
 
-            / Dry run
+            // Dry run to prevent some performance hiccups on the first method invoked by the class
             bubbleSorter.sort(latitudes.toArray(new Double[0]).clone(), 0);
 
-            / Running regular bubble sort
+            // Testing begins
             testSort(bubbleSorter, latitudes, 0);
 
-            System.out.println("\n\nOPTIMIZED BUBBLE SORT");
+            System.out.println("\n\nOPTIMIZED BUBBLE SORT (SHUFFLED)");
             System.out.println("_______________________________________________________________________");
             testSort(bubbleSorter, latitudes, 1);
 
-            / Insertion sort testing
+            // INSERTION SORT TESTING
             System.out.println("\n\nINSERTION SORT");
             System.out.println("_______________________________________________________________________");
             InsertionSorter insertionSorter = new InsertionSorter();
             testSort(insertionSorter, latitudes, 0);
 
-            / Merge sort
-            System.out.println("\n\nMERGE SORT");
+            // MERGE SORT TESTING
+            System.out.println("\n\nMERGE SORT (SHUFFLED)");
             System.out.println("_______________________________________________________________________");
             MergeSorter mergeSorter = new MergeSorter();
             testSort(mergeSorter, latitudes, 0);
-            */
-            // Quick sort
+
+            // QUICK SORT TESTING
             QuickSorter quickSorter = new QuickSorter();
 
             System.out.println("\n\nQUICK SORT WITH PIVOT LAST (Lomuto)");
