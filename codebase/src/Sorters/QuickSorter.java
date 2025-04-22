@@ -4,23 +4,17 @@ import java.util.Collections;
 import java.util.LinkedList;
 
 public class QuickSorter implements Sorter{
+    // Logging variables
     private int logPartitions;
     private int logComparisons;
-    private int logOperations;
 
     public QuickSorter(){
        this.logPartitions = 0;
-       this.logOperations = 0;
        this.logComparisons = 0;
-    }
-
-    public int getOperations() {
-        return this.logOperations;
     }
 
     public void reset(){
         this.logPartitions = 0;
-        this.logOperations = 0;
         this.logComparisons = 0;
     }
 
@@ -106,11 +100,14 @@ public class QuickSorter implements Sorter{
     }
 
     private void quickSortRec(Double[] list, int lowerBoundaryIndex, int higherBoundaryIndex, int partitionMethod){
-        // TODO: breakpoint
+        // Breakpoint for the recursive method
         if(lowerBoundaryIndex >= higherBoundaryIndex || lowerBoundaryIndex < 0){
             return;
         }
+
+        // Stores the new pivot for the partition
         int newPivotIndex;
+
         switch (partitionMethod){
             // Task a: Lomuto, pivot is last element
             case 0:
@@ -155,7 +152,6 @@ public class QuickSorter implements Sorter{
         for(int i = 0; i < 100; i++){
             testList.push(Math.floor(Math.random() * 100000) / 100);
         }
-
         testList.clear();
         testList.add(1.0);
         testList.add(2.0);
@@ -165,12 +161,10 @@ public class QuickSorter implements Sorter{
         testList.add(6.0);
         testList.add(7.0);
         testList.add(8.0);
-
         Collections.shuffle(testList);
         Double[] array = testList.toArray(new Double[0]);
         System.out.print("Before sort: ");
         //System.out.println(testList);
-
         sort(array, 0);
         System.out.print("After sort: ");
         //System.out.println(Arrays.toString(array));
