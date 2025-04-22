@@ -2,6 +2,7 @@ package Sorters;
 
 public class InsertionSorter implements Sorter{
 
+    // Field for number of operations the algorithm performs
     private int logOperations;
 
     public InsertionSorter(){
@@ -17,10 +18,9 @@ public class InsertionSorter implements Sorter{
     }
 
     public void sort(Double[] list, int flag){
-        int listLength = list.length;
         double unsortedElement;
 
-        for(int unsortedElementIndex = 1; unsortedElementIndex < listLength; unsortedElementIndex++){
+        for(int unsortedElementIndex = 1; unsortedElementIndex < list.length; unsortedElementIndex++){
             logOperations++;
             int insertionComparatorElementIndex = unsortedElementIndex - 1;
 
