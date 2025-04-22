@@ -7,16 +7,10 @@ public class BubbleSorter implements Sorter{
     //Data fields
     private int logSwaps = 0;
     private int logPasses = 0;
-    private int logOperations = 0;
 
     public BubbleSorter(){
         this.logSwaps = 0;
         this.logPasses = 0;
-        this.logOperations = 0;
-    }
-
-    public int getOperations() {
-        return this.logOperations;
     }
 
     public int getPasses() {
@@ -30,7 +24,6 @@ public class BubbleSorter implements Sorter{
     public void reset(){
         this.logPasses = 0;
         this.logSwaps = 0;
-        this.logOperations = 0;
     }
 
     //Swap function, copied from QuickSorter
@@ -40,35 +33,20 @@ public class BubbleSorter implements Sorter{
         list[indexB] = temp;
     }
 
-    // Sorting method. flag = 0 for unoptimized, and 0 for optimized
+    // Sorting method. flag = 0 for unoptimized, and 1 for optimized
     public void sort(Double[] list, int flag) {
         int arrayLength = list.length;
         switch(flag){
-            case 1:
-                boolean swapped;
-                int lastSwapPosition;
-                int end = arrayLength - 1;
-
-                do {
-                    this.logPasses++;
-                    swapped = false;
-                    lastSwapPosition = 0;
-                    for (int j = 0; j < end; j++) {
-                        if (list[j] > list[j + 1]) {
-                            this.logSwaps++;
-                            swap(list, j, j + 1);
-                            swapped = true;
-                            lastSwapPosition = j;
-                        }
-                    }
-                    end = lastSwapPosition;
-                } while (swapped);
-                break;
-
+            // Unoptimized Bubble sort
             case 0:
+                // Outer loop runs through the array, each iteration is one pass
                 for (int i = 0; i < arrayLength - 1; i++) {
+                    // For logging
                     this.logPasses++;
+
+                    // Inner loop compares and swaps elements
                     for (int j = 0; j < arrayLength - 1; j++) {
+                        //If current element is greater than the next, swap them
                         if (list[j] > list[j + 1]) {
                             this.logSwaps++;
                             swap(list, j, j + 1);
@@ -77,6 +55,40 @@ public class BubbleSorter implements Sorter{
                 }
                 break;
 
+            // Optimized Bubble sort
+            case 1:
+                boolean swapped;
+                int lastSwapPosition;
+                int end = arrayLength - 1;
+
+                do {
+                    this.logPasses++;
+
+                    // Toggles if swaps are made during pass, defaulted to false
+                    swapped = false;
+
+                    lastSwapPosition = 0; // Initialize variable
+
+                    // Only bubble through the unsorted part of the array
+                    for (int j = 0; j < end; j++) {
+
+                        // If current element is greater than the last, swap them
+                        if (list[j] > list[j + 1]) {
+                            this.logSwaps++;
+                            swap(list, j, j + 1);
+                            swapped = true; // Declare that the swap occured
+                            lastSwapPosition = j; // Save last swapped position
+                        }
+                    }
+
+                    /* Limit next pass to the last position where a swap occurred,
+                    because everything after that is already swapped
+                    */
+                    end = lastSwapPosition;
+                } while (swapped); // Repeat until no swaps are made (list is sorted)
+                break;
+
+            // Handling misinput
             default:
                 System.out.println("Invalid flag. Needs to be either 0 (optimized) or 1 (unoptimized).");
                 break;
