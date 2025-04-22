@@ -3,6 +3,9 @@ package Sorters;
 import java.util.Collections;
 import java.util.LinkedList;
 
+/*
+* CREATED BY CANDIDATE 94
+* */
 public class QuickSorter implements Sorter{
     // Logging variables
     private int logPartitions;
@@ -112,7 +115,6 @@ public class QuickSorter implements Sorter{
             // Task a: Lomuto, pivot is last element
             case 0:
                 newPivotIndex = partitionLom(list, lowerBoundaryIndex, higherBoundaryIndex);
-                //System.out.printf("Index of new pivot: %d\n", newPivotIndex);
                 quickSortRec(list, lowerBoundaryIndex, newPivotIndex - 1, 0);
                 quickSortRec(list, newPivotIndex + 1, higherBoundaryIndex, 0);
                 break;

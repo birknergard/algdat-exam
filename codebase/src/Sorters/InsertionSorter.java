@@ -1,5 +1,8 @@
 package Sorters;
 
+/*
+ * CREATED BY CANDIDATE 94
+ * */
 public class InsertionSorter implements Sorter{
 
     // Field for number of operations the algorithm performs
