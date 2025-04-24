@@ -11,19 +11,14 @@ public class Main {
     // Method used for running sorting algorithms. Includes printing of messages and tracks time.
     public static boolean testSort(Sorter sorter, ArrayList<Double> list, int flag){
         ArrayList<Long> times = new ArrayList<>();
-
-        // This variable controls how many tests the program runs
         int sorts = 1;
         boolean wasSorted;
 
         System.out.printf("TESTING SORT %d times ...\n", sorts);
         System.out.printf("DATASET LENGTH: %d elements\n", list.size());
-
         for(int i = 0; i < sorts; i++){
-            // Cloned array
             Double[] unsortedArray = ((ArrayList<Double>) list.clone()).toArray(new Double[0]);
 
-            // Logs time in nanoseconds for sort
             long startTime = System.nanoTime();
             sorter.sort(unsortedArray, flag);
             long timeSorting = System.nanoTime() - startTime;
@@ -103,8 +98,8 @@ public class Main {
         // Data structure to hold data
         ArrayList<Double> latitudes = new ArrayList<>();
 
+        // Handle data import
         try{
-            // Handle data import
             Scanner reader = new Scanner(new FileInputStream("../worldcities.csv"));
 
             // Skipping the first line (its just category names)
@@ -120,6 +115,7 @@ public class Main {
                 var city = new City(csvString);
                 latitudes.add(city.getLat());
             }
+               //System.out.println(latitudes);
 
             /* ______________________________________TESTING INFRASTRUCTURE______________________________________ */
             //  For randomizing list order, comment/uncomment to use
@@ -168,7 +164,7 @@ public class Main {
             testSort(quickSorter, latitudes, 2);
 
         } catch (FileNotFoundException e){
-            System.out.println("ERROR: Could not load file.");
+            System.out.println("Could not load file.");
         }
     }
 }
